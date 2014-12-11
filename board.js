@@ -47,4 +47,8 @@ module.exports = function Board() {
 		ticket.devWorkDone += workDone;
 	};
 
+	this.canPushToTestInProgess = function() {
+		return true;
+	};
+
 };

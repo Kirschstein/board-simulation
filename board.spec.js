@@ -26,7 +26,7 @@ describe('the board', function() {
 		expect(theBoard['backlog'][0].ready()).toBe(true);
 	});
 
-	it('pull a ticket from backlog to dev in progress', function() {
+	it('can pull a ticket from backlog to dev in progress', function() {
 		theBoard.addTicket({ id : 1});
 		theBoard.pullTicket(1);
 		expect(theBoard['dev-in-progress'].length).toBe(1);
@@ -56,6 +56,7 @@ describe('the board', function() {
 		theBoard.pullTicket(2);
 		theBoard.devWorkOn(1,2);
 		theBoard.devWorkOn(2,2);
+		expect(theBoard.canPushToTestInProgess()).toBe(true);
 	});
 
 
