@@ -11,6 +11,7 @@ module.exports = function Board() {
 	this['backlog'] = [];
 	this['dev-in-progress'] = [];
 	this['dev-done'] = [];
+	this['test-in-progress'] = [];
 
 	this.addTicket = function(ticket) {
 		this['backlog'].push(ticket);
@@ -47,8 +48,8 @@ module.exports = function Board() {
 		ticket.devWorkDone += workDone;
 	};
 
-	this.canPushToTestInProgess = function() {
-		return true;
+	this.pushFromDevDoneToTest = function() {
+		this['test-in-progress'].push.apply
 	};
 
 };

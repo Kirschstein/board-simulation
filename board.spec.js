@@ -15,6 +15,14 @@ describe('the board', function() {
 		expect(theBoard.columns).toContain('test-done');
 		expect(theBoard.columns).toContain('live');
 	});
+});
+
+describe('working from the backlog', function() {
+	var theBoard
+
+	beforeEach(function(){
+	 	theBoard = new Board();
+	});
 
 	it('can add a ticket to the backlog', function() {
 		theBoard.addTicket({});
@@ -33,14 +41,22 @@ describe('the board', function() {
 		expect(theBoard['dev-in-progress'][0].id).toBe(1);
 		expect(theBoard['backlog'].length).toBe(0);
 	});
+});
 
-	it('tickets in dev-in-progress cannot be pulled immediately', function(){
+describe('working in dev-in-progress', function() {
+	var theBoard
+
+	beforeEach(function(){
+	 	theBoard = new Board();
+	});	
+
+	it('tickets in dev-in-progress cannot immediately be pushed into dev-done', function(){
 		theBoard.addTicket({id:1, devCost : 2});
 		theBoard.pullTicket(1);
 		expect(theBoard['dev-in-progress'][0].ready()).toBe(false);
 	});	
 
-	it('once a ticket in dev-in-progress has had all its worked completed it can be pulled', function() {
+	it('once a ticket in dev-in-progress has had all its worked completed it can be pushed into dev-done', function() {
 		theBoard.addTicket({id:1, devCost : 2});
 		theBoard.pullTicket(1);
 		theBoard.devWorkOn(1, 2);
@@ -49,15 +65,16 @@ describe('the board', function() {
 		expect(theBoard['dev-done'].length).toBe(1);
 	});
 
-	it('all dev completed work can be pushed into test-in-progress', function() {
+	it('all dev completed work can be pulled into test-in-progress', function() {
 		theBoard.addTicket({id:1, devCost : 2});
 		theBoard.addTicket({id:2, devCost : 2});
 		theBoard.pullTicket(1);
 		theBoard.pullTicket(2);
 		theBoard.devWorkOn(1,2);
 		theBoard.devWorkOn(2,2);
-		expect(theBoard.canPushToTestInProgess()).toBe(true);
+		theBoard.pullTicket(1);
+		theBoard.pullTicket(2);
+		theBoard.pushFromDevDoneToTest();
+		expect(theBoard['test-in-progress'].length).toBe(2);
 	});
-
-
 });
