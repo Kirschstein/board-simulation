@@ -49,7 +49,8 @@ module.exports = function Board() {
 	};
 
 	this.pushFromDevDoneToTest = function() {
-		this['test-in-progress'].push.apply
+		this['test-in-progress'].push.apply(this['test-in-progress'], this['dev-done']);
+		this['dev-done'].length = 0;
 	};
 
 };

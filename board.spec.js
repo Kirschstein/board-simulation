@@ -76,5 +76,6 @@ describe('working in dev-in-progress', function() {
 		theBoard.pullTicket(2);
 		theBoard.pushFromDevDoneToTest();
 		expect(theBoard['test-in-progress'].length).toBe(2);
+		expect(theBoard['dev-done'].length).toBe(0);
 	});
 });
