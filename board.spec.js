@@ -79,3 +79,28 @@ describe('working in dev-in-progress', function() {
 		expect(theBoard['dev-done'].length).toBe(0);
 	});
 });
+
+describe('working in test-in-progress', function() {
+	var theBoard
+
+	beforeEach(function(){
+	 	theBoard = new Board();
+	});	
+
+	it('test completed work can be pulled into test-done', function() {
+		theBoard.addTicket({id:1, devCost : 2, testCost : 1});
+		theBoard.addTicket({id:2, devCost : 2, testCost : 2});
+		theBoard.pullTicket(1);
+		theBoard.pullTicket(2);
+		theBoard.devWorkOn(1,2);
+		theBoard.devWorkOn(2,2);
+		theBoard.pullTicket(1);
+		theBoard.pullTicket(2);
+		theBoard.pushFromDevDoneToTest();
+		theBoard.testWorkOn(1,1);
+		expect(theBoard['test-in-progress'][0].ready()).toBe(true);
+		expect(theBoard['test-in-progress'][1].ready()).toBe(false);
+	});
+
+
+});

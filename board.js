@@ -48,9 +48,18 @@ module.exports = function Board() {
 		ticket.devWorkDone += workDone;
 	};
 
+	this.testWorkOn = function(ticketId, workDone) {
+		var ticket = _.find(this['test-in-progress'], function(t) { return t.id == ticketId;});
+		ticket.testWorkDone = ticket.testWorkDone || 0;
+		ticket.testWorkDone += workDone;
+	};
+
 	this.pushFromDevDoneToTest = function() {
 		this['test-in-progress'].push.apply(this['test-in-progress'], this['dev-done']);
 		this['dev-done'].length = 0;
+		_.each(this['test-in-progress'], function(ticket) { ticket.ready = function() {
+			return this.testCost <= this.testWorkDone;
+		}});
 	};
 
 };
