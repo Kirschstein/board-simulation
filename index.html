@@ -19,6 +19,7 @@
     <![endif]-->
 
     <script src="angular.min.js"></script>
+    <script src="controllers.js"></script>
 
   </head>
   <body ng-controller="boardController">
@@ -38,10 +39,11 @@
     	<div class="col-md-2">
 			<h2>backlog</h2>
 
-			<div class="card">
-				value : 3 <br/>
-				dev cost: 2<br/>
-				qa cost: 2 <br/>
+			<div ng-repeat="card in backlogTickets" class="card col-md-6">
+				value : {{card.value}} <br/>
+				dev cost: {{card.devCost}}<br/>
+				qa cost: {{card.qaCost}}<br/>
+      <a href="#" ng-show="card.showCard()">monkey</a>
 
 			</div>
 
