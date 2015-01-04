@@ -4,6 +4,7 @@
 
 var phonecatControllers = angular.module('phonecatControllers', []);
 
+
 phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
   function($scope, Phone) {
     $scope.phones = Phone.query();
@@ -21,7 +22,23 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
     }
   }]);
 
-phonecatControllers.controller('BoardCtrl', ['$scope', 
+var boardControllers = angular.module('boardControllers', []);
+
+boardControllers.controller('BoardCtrl', ['$scope', 
   function($scope) {
-      $scope.message = 'ba weep grana';
+      $scope.backlogTickets = [];
+
+      $scope.backlogTickets.push({
+        value : 1,
+        devCost : 2,
+        qaCost : 2,
+        isReady : function() { return true;},
+        pull : function() { this.value = 2; }
+      });
+      $scope.backlogTickets.push({
+        value : 2,
+        devCost : 3,
+        qaCost : 3,
+        isReady : function() { return false;}
+      });
   }]);
