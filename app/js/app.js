@@ -22,7 +22,11 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/phone-detail.html',
         controller: 'PhoneDetailCtrl'
       }).
+      when('/board', {
+        templateUrl: 'partials/board.html',
+        controller: 'BoardCtrl'
+      }).
       otherwise({
-        redirectTo: '/phones'
+        redirectTo: '/board'
       });
   }]);

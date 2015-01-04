@@ -20,3 +20,8 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
       $scope.mainImageUrl = imageUrl;
     }
   }]);
+
+phonecatControllers.controller('BoardCtrl', ['$scope', 
+  function($scope) {
+      $scope.message = 'ba weep grana';
+  }]);
