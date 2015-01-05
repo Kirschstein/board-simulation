@@ -23,8 +23,8 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
 
 var boardControllers = angular.module('boardControllers', []);
 
-boardControllers.controller('BoardCtrl', ['$scope', 
-  function($scope) {
+boardControllers.controller('BoardCtrl', ['$scope', 'Random', 
+  function($scope, Random) {
       $scope.backlog = [];
       $scope.devInProgress = [];
 
@@ -37,18 +37,29 @@ boardControllers.controller('BoardCtrl', ['$scope',
           };
       };
 
-      $scope.backlog.add = function(value, devCost, qaCost) {
+      $scope.backlog.add = function(v, dev, qa) {
           this.push({
-            value : value,
-            devCost : devCost,
-            qaCost : qaCost,     
+            value : v,
+            devCost : dev,
+            qaCost : qa,     
             isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
             pull : function() { 
               $scope.devInProgress.add(this);
               var index = $scope.backlog.indexOf(this);
               $scope.backlog.splice(index, 1);
+            },
+            devWork : function(amount) {
+              this.devCost -= amount;
             }     
           });
+      };
+
+      $scope.newDay = function() {
+          for (var i =0; i < $scope.devInProgress.length; ++i) {
+              if ($scope.devInProgress[i]) {
+                $scope.devInProgress[i].devWork(Random.nextRandom(0,0));
+              }
+          };
       };
 
       $scope.backlog.add(2,3,4);

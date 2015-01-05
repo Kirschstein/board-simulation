@@ -8,6 +8,7 @@ var phonecatApp = angular.module('phonecatApp', [
 
   'phonecatControllers',
   'boardControllers',
+  'boardServices',
   'phonecatFilters',
   'phonecatServices'
 ]);
