@@ -23,6 +23,14 @@
 
     	<div class="col-md-2">
 			<h2>dev done</h2>
+
+           <div ng-repeat="card in devDone" class="card col-md-6">
+            value : {{card.value}} <br/>
+            dev cost: {{card.devCost}}<br/>
+            qa cost: {{card.qaCost}}<br/>
+            <a ng-show="card.isReady()" class="btn btn-primary btn-xs" ng-click="card.pull()">pull</a>
+           </div>
+
     	</div>
 
     	<div class="col-md-2">

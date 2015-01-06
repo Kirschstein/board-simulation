@@ -27,13 +27,25 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
   function($scope, Random) {
       $scope.backlog = [];
       $scope.devInProgress = [];
+      $scope.devDone = [];
 
       $scope.devInProgress.devCount = 3;
+
+      $scope.devDone.add = function(card) {
+          this.push(card);
+      };
 
       $scope.devInProgress.add = function(card) {
           this.push(card);
           card.isReady = function() {
               return this.devCost <= 0;
+          };
+          card.pull = function() {
+            var index = $scope.devInProgress.indexOf(this);
+            if (index != -1) {
+                $scope.devDone.add(this);
+                $scope.devInProgress.splice(index, 1);
+              }
           };
       };
 
@@ -44,12 +56,16 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
             qaCost : qa,     
             isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
             pull : function() { 
-              $scope.devInProgress.add(this);
               var index = $scope.backlog.indexOf(this);
-              $scope.backlog.splice(index, 1);
+              if (index != -1) {
+                $scope.devInProgress.add(this);
+                $scope.backlog.splice(index, 1);
+              }
             },
             devWork : function(amount) {
               this.devCost -= amount;
+              if (this.devCost < 0)
+                this.devCost = 0;
             }     
           });
       };

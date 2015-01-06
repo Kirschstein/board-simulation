@@ -3,7 +3,7 @@
 describe('board controllers', function() {
   	beforeEach(module('phonecatApp'));
 
-	describe('BoardCtrl', function(){
+	describe('BoardCtrl with three tickets in the backlog', function(){
     	var scope, ctrl, $httpBackend, random;
 
 	    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
@@ -34,7 +34,7 @@ describe('board controllers', function() {
 			expect(scope.backlog[0].isReady()).toBe(true);
 		});
 
-		it('can pull from backlog if there is a spare dev to pick up the card', function() {
+		it('cannot pull from backlog if there is not a spare dev to pick up the card', function() {
 			scope.backlog[0].pull();
 			scope.backlog[0].pull();
 			scope.backlog[0].pull();
@@ -44,12 +44,28 @@ describe('board controllers', function() {
 
 		it('can work on tickets when we go to next day', function(){
 			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
 
 			scope.newDay();
 
 			expect(scope.devInProgress[0].devCost).toBe(1);
+		});
+
+
+		it('wont let a card go below 0 dev cost when working on it', function(){
+			scope.backlog[0].pull();
+			scope.newDay();
+			scope.newDay();
+
+			expect(scope.devInProgress[0].devCost).toBe(0);
+		});
+
+		it('allows us to pull finished dev tickets into dev done', function(){
+			scope.backlog[0].pull();
+			scope.newDay();
+			scope.newDay();
+			scope.devInProgress[0].pull();
+
+			expect(scope.devDone.length).toBe(1);
 		});
 	});
 });
