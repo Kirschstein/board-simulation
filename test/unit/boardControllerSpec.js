@@ -67,5 +67,24 @@ describe('board controllers', function() {
 
 			expect(scope.devDone.length).toBe(1);
 		});
+
+		it('card does not show as ready after pushing into dev done', function() {
+			scope.backlog[0].pull();
+			scope.newDay();
+			scope.newDay();
+			scope.devInProgress[0].pull();
+
+			expect(scope.devDone[0].isReady()).toBe(false);
+		});
+
+		it('dev done can be pulled if it has an item in it', function(){
+			scope.backlog[0].pull();
+			scope.newDay();
+			scope.newDay();
+			scope.devInProgress[0].pull();
+
+
+			expect(scope.devDone.isReady()).toBe(true);
+		});
 	});
 });

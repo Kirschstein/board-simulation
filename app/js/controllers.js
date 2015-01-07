@@ -28,11 +28,14 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.backlog = [];
       $scope.devInProgress = [];
       $scope.devDone = [];
+    //  $scope.devDone.isReady = function() { return false;}
 
       $scope.devInProgress.devCount = 3;
 
       $scope.devDone.add = function(card) {
           this.push(card);
+          card.isReady = function() { return false;}
+          this.isReady = function() { return true;}
       };
 
       $scope.devInProgress.add = function(card) {
