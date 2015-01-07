@@ -1,6 +1,6 @@
-<div ng-repeat="card in backlogTickets" class="card col-md-6">
+<div class="card col-md-6">
 	value : {{card.value}} <br/>
-    dev cost: {{card.devCost}}<br/>
-    qa cost: {{card.qaCost}}<br/>
-    <a href="#" ng-show="card.isReady()" class="btn btn-primary btn-xs" ng-click="card.pull()">pull</a>
+	dev cost: {{card.devCost}}<br/>
+	qa cost: {{card.qaCost}}<br/>
+	<a ng-show="card.isReady()" class="btn btn-primary btn-xs" ng-click="card.pull()">pull</a>
 </div>
