@@ -29,6 +29,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.devInProgress = [];
       $scope.devDone = [];
       $scope.testInProgress = [];
+      $scope.testDone = [];
+
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
         $scope.devDone.length = 0;
@@ -76,11 +78,25 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
                 this.devCost = 0;
             },
             qaWork : function(amount) {
+              var diff = amount - this.qaCost;
               this.qaCost -= amount;
-              if (this.qaCost < 0)
-                this.qaCost = 0;          
+              if (this.qaCost < 0) {
+                this.qaCost = 0;
+                return diff;    
+              }      
             },
           });
+      };
+
+      $scope.doTestWork = function(amount) {
+          if ($scope.testInProgress[0]) {
+            var diff = $scope.testInProgress[0].qaWork(amount);
+            if (diff > 0) {
+                $scope.testDone.push($scope.testInProgress[0]);
+                $scope.testInProgress.splice(0, 1);
+                $scope.doTestWork(diff);
+            }
+          }
       };
 
       $scope.newDay = function() {
@@ -90,12 +106,10 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
               }
           };
 
-          for(var i=0; i < $scope.testInProgress.length; ++i) {
-              if ($scope.testInProgress[i]) {
-                $scope.testInProgress[i].qaWork(Random.nextRandom(0,0));
-              }
-          };
+          $scope.doTestWork(Random.nextRandom(0,0));
       };
+
+
 
       $scope.backlog.add(2,3,4);
       $scope.backlog.add(4,3,5);

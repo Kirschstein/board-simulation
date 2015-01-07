@@ -36,6 +36,12 @@ describe('board controllers', function() {
 	    	expect(scope.testInProgress).toBeDefined();
 	    });
 
+
+	    it('has a test done queue', function() {
+	    	expect(scope.testDone).toBeDefined();
+	    });
+
+
 		it('populates the board with a couple of tickets', function(){
 			expect(scope.backlog.length).toBe(4);
 		});
@@ -122,13 +128,30 @@ describe('board controllers', function() {
 			expect(scope.testInProgress[0].qaCost).toBe(2);
 		});
 
-		it('wont allow a ticket to go below 0 qaCost', function() {
+		it('tickets in test are only worked on if there is spare QA capacity', function(){
+			scope.devDone.pull();
+			scope.newDay();
+
+			expect(scope.testInProgress[1].qaCost).toBe(5);
+		});
+
+		it('completed qa cards are immediately placed into test done', function(){
 			scope.devDone.pull();
 			scope.newDay();
 			scope.newDay();
 			scope.newDay();
 
-			expect(scope.testInProgress[0].qaCost).toBe(0);
+			expect(scope.testDone.length).toBe(1);
+			expect(scope.testDone[0].qaCost).toBe(0);
+		});
+
+		it('extra qa capacity is immediately spent on the next card', function(){
+			scope.devDone.pull();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			expect(scope.testInProgress[0].qaCost).toBe(3);
 		});
 	});
 });
