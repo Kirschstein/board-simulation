@@ -28,7 +28,11 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.backlog = [];
       $scope.devInProgress = [];
       $scope.devDone = [];
-    //  $scope.devDone.isReady = function() { return false;}
+      $scope.testInProgress = [];
+      $scope.devDone.pull = function() {
+        $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
+        $scope.devDone.length = 0;
+      };
 
       $scope.devInProgress.devCount = 3;
 
