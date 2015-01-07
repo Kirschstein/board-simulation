@@ -36,11 +36,9 @@ describe('board controllers', function() {
 	    	expect(scope.testInProgress).toBeDefined();
 	    });
 
-
 	    it('has a test done queue', function() {
 	    	expect(scope.testDone).toBeDefined();
 	    });
-
 
 		it('populates the board with a couple of tickets', function(){
 			expect(scope.backlog.length).toBe(4);
@@ -56,6 +54,12 @@ describe('board controllers', function() {
 			scope.backlog[0].pull();
 
 			expect(scope.backlog[0].isReady()).toBe(false);
+		});
+
+		it('adds new tickets to the backlog on a new day', function() {
+			scope.newDay();
+
+			expect(scope.backlog.length).toBe(6);
 		});
 
 		it('can work on tickets when we go to next day', function(){
@@ -153,5 +157,7 @@ describe('board controllers', function() {
 
 			expect(scope.testInProgress[0].qaCost).toBe(3);
 		});
+
+
 	});
 });

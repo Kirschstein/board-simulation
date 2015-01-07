@@ -100,6 +100,10 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       };
 
       $scope.newDay = function() {
+
+        $scope.backlog.add(2,2,2);
+        $scope.backlog.add(2,2,2);
+
           for (var i =0; i < $scope.devInProgress.length; ++i) {
               if ($scope.devInProgress[i]) {
                 $scope.devInProgress[i].devWork(Random.nextRandom(0,0));
@@ -108,8 +112,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
 
           $scope.doTestWork(Random.nextRandom(0,0));
       };
-
-
 
       $scope.backlog.add(2,3,4);
       $scope.backlog.add(4,3,5);
