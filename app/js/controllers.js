@@ -101,16 +101,21 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
 
       $scope.newDay = function() {
 
-        $scope.backlog.add(2,2,2);
-        $scope.backlog.add(2,2,2);
+        for(var i=0; i < 2; ++i) {
+           var value = Random.nextRandom(1,6);
+           var dice = Math.ceil(value / 2);
+           var devCost = Random.nextRandom(1 * dice, 6 * dice);
+           var qaCost = Math.min(4, Math.max(2, value));
+           $scope.backlog.add(value,devCost,qaCost);
+        };
 
-          for (var i =0; i < $scope.devInProgress.length; ++i) {
-              if ($scope.devInProgress[i]) {
-                $scope.devInProgress[i].devWork(Random.nextRandom(0,0));
-              }
-          };
+        for (var i =0; i < $scope.devInProgress.length; ++i) {
+          if ($scope.devInProgress[i]) {
+            $scope.devInProgress[i].devWork(Random.nextRandom(6,1));
+          }
+        };
 
-          $scope.doTestWork(Random.nextRandom(0,0));
+          $scope.doTestWork(Random.nextRandom(6,1));
       };
 
       $scope.backlog.add(2,3,4);

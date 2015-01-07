@@ -157,7 +157,5 @@ describe('board controllers', function() {
 
 			expect(scope.testInProgress[0].qaCost).toBe(3);
 		});
-
-
 	});
 });
