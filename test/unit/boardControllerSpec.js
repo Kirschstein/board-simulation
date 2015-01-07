@@ -67,7 +67,7 @@ describe('board controllers', function() {
 			scope.backlog[0].pull();
 			scope.newDay();
 			scope.newDay();
-		});
+		}, 'We pull one ticket into dev in progress and it is completed');
 
 		it('wont let a card go below 0 dev cost when working on it', function(){
 			expect(scope.devInProgress[0].devCost).toBe(0);
@@ -93,19 +93,42 @@ describe('board controllers', function() {
 	});
 
 	describe('working on tickets in testInProgress', function() {
+
+		beforeEach(function() {
+			scope.backlog[0].pull();
+			scope.backlog[0].pull();
+			scope.newDay();
+			scope.newDay();
+			scope.devInProgress[0].pull();
+			scope.devInProgress[0].pull();
+		}, 'Complete two tickets and pull them into devDone');
+
 		it('pulling dev done into test moves all of the tickets', function(){
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-			scope.newDay();
-			scope.newDay();
-			scope.devInProgress[0].pull();
-			scope.devInProgress[0].pull();
 			scope.devDone.pull();
 
 			expect(scope.devDone.length).toBe(0);
 			expect(scope.testInProgress.length).toBe(2);
 		});
 
+		it('pulling tickets from devDone hides the pull button', function() {
+			scope.devDone.pull();
+			expect(scope.devDone.isReady()).toBe(false);
+		});
 
+		it('working on a ticket in test in progress', function() {
+			scope.devDone.pull();
+			scope.newDay();
+
+			expect(scope.testInProgress[0].qaCost).toBe(2);
+		});
+
+		it('wont allow a ticket to go below 0 qaCost', function() {
+			scope.devDone.pull();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			expect(scope.testInProgress[0].qaCost).toBe(0);
+		});
 	});
 });

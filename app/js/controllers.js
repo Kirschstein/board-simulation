@@ -32,6 +32,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
         $scope.devDone.length = 0;
+        $scope.devDone.isReady = function() { return false;};
       };
 
       $scope.devInProgress.devCount = 3;
@@ -73,7 +74,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
               this.devCost -= amount;
               if (this.devCost < 0)
                 this.devCost = 0;
-            }     
+            },
+            qaWork : function(amount) {
+              this.qaCost -= amount;
+              if (this.qaCost < 0)
+                this.qaCost = 0;          
+            },
           });
       };
 
@@ -81,6 +87,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
           for (var i =0; i < $scope.devInProgress.length; ++i) {
               if ($scope.devInProgress[i]) {
                 $scope.devInProgress[i].devWork(Random.nextRandom(0,0));
+              }
+          };
+
+          for(var i=0; i < $scope.testInProgress.length; ++i) {
+              if ($scope.testInProgress[i]) {
+                $scope.testInProgress[i].qaWork(Random.nextRandom(0,0));
               }
           };
       };
