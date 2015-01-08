@@ -31,6 +31,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.testInProgress = [];
       $scope.testDone = [];
       $scope.live = [];
+      $scope.dayCount = 1;
 
       $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
       $scope.testDone.pull = function() { 
@@ -123,6 +124,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
         };
 
           $scope.doTestWork(Random.nextRandom(6,1));
+
+          $scope.dayCount++;
       };
 
       $scope.backlog.add(2,3,4);
