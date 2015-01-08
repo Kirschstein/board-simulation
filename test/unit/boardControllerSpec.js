@@ -40,6 +40,10 @@ describe('board controllers', function() {
 	    	expect(scope.testDone).toBeDefined();
 	    });
 
+	    it('has a live column', function() {
+	    	expect(scope.live).toBeDefined();
+	    });
+
 		it('populates the board with a couple of tickets', function(){
 			expect(scope.backlog.length).toBe(4);
 		});
@@ -157,5 +161,36 @@ describe('board controllers', function() {
 
 			expect(scope.testInProgress[0].qaCost).toBe(3);
 		});
+
+		it('test can be pushed to live when all testing is done on the cards', function(){
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			expect(scope.testInProgress.length).toBe(0);
+			expect(scope.testDone.isReady()).toBe(true);
+		});
+
+
+		it('pushing test to live empties test and puts cards in live', function(){
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			scope.testDone.pull();
+
+			expect(scope.testDone.length).toBe(0);
+			expect(scope.live.length).toBe(2);
+		});
+
+
 	});
 });

@@ -30,6 +30,13 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.devDone = [];
       $scope.testInProgress = [];
       $scope.testDone = [];
+      $scope.live = [];
+
+      $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
+      $scope.testDone.pull = function() { 
+        $scope.live.push.apply($scope.live, $scope.testDone );
+        $scope.testDone.length = 0;
+      }
 
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
