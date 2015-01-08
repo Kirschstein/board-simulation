@@ -3,12 +3,13 @@
 describe('board controllers', function() {
   	beforeEach(module('phonecatApp'));
 
-	var scope, ctrl, $httpBackend, random;
+	var scope, ctrl, $httpBackend, random, workDone;
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+    	workDone = 2;
       random = {
       	nextRandom : function(low,high) {
-      		return 2;
+      		return workDone;
       	}
       };
 
@@ -147,7 +148,6 @@ describe('board controllers', function() {
 			scope.devDone.pull();
 			scope.newDay();
 			scope.newDay();
-			scope.newDay();
 
 			expect(scope.testDone.length).toBe(1);
 			expect(scope.testDone[0].qaCost).toBe(0);
@@ -155,8 +155,7 @@ describe('board controllers', function() {
 
 		it('extra qa capacity is immediately spent on the next card', function(){
 			scope.devDone.pull();
-			scope.newDay();
-			scope.newDay();
+			workDone = 6;
 			scope.newDay();
 
 			expect(scope.testInProgress[0].qaCost).toBe(3);

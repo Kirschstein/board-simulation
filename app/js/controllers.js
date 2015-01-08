@@ -100,10 +100,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.doTestWork = function(amount) {
           if ($scope.testInProgress[0]) {
             var diff = $scope.testInProgress[0].qaWork(amount);
-            if (diff > 0) {
+            if ($scope.testInProgress[0].qaCost === 0) {
                 $scope.testDone.push($scope.testInProgress[0]);
                 $scope.testInProgress.splice(0, 1);
-                $scope.doTestWork(diff);
+                if (diff > 0) {
+                  $scope.doTestWork(diff);
+                }
             }
           }
       };
