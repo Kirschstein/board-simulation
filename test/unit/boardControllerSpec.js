@@ -191,6 +191,22 @@ describe('board controllers', function() {
 			expect(scope.live.length).toBe(2);
 		});
 
+		it('keeps a cumulative total of value released to live (per day)', function(){
+			scope.live.push({
+				value :2
+			});
+
+			scope.newDay();
+
+			scope.live.push({
+				value : 3
+			});
+
+			scope.newDay();
+
+			expect(scope.cumulativeValue).toBe((2 * 2) + 3);
+		});
+
 
 	});
 });

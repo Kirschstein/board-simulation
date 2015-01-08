@@ -32,6 +32,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.testDone = [];
       $scope.live = [];
       $scope.dayCount = 1;
+      $scope.cumulativeValue = 0;
 
       $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
       $scope.testDone.pull = function() { 
@@ -123,8 +124,11 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
           }
         };
 
-          $scope.doTestWork(Random.nextRandom(6,1));
+        for (var i=0; i < $scope.live.length; ++i) {
+          $scope.cumulativeValue += $scope.live[i].value;
+        };
 
+          $scope.doTestWork(Random.nextRandom(6,1));
           $scope.dayCount++;
       };
 
