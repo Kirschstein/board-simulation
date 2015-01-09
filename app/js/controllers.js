@@ -83,8 +83,9 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
             },
             devWork : function(amount) {
               this.devCost -= amount;
-              if (this.devCost < 0)
+              if (this.devCost < 0) {
                 this.devCost = 0;
+              }
             },
             qaWork : function(amount) {
               var diff = amount - this.qaCost;
@@ -113,9 +114,9 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
       $scope.newDay = function() {
 
         for(var i=0; i < 2; ++i) {
-           var value = Random.nextRandom(1,6);
+           var value = Random.nextRandom(7,1);
            var dice = Math.ceil(value / 2);
-           var devCost = Random.nextRandom(1 * dice, 6 * dice);
+           var devCost = Random.nextRandom(7 * dice, 1 * dice);
            var qaCost = Math.min(4, Math.max(2, value));
            $scope.backlog.add(value,devCost,qaCost);
         };
@@ -130,12 +131,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
           $scope.cumulativeValue += $scope.live[i].value;
         };
 
-          $scope.doTestWork(Random.nextRandom(6,1));
+          $scope.doTestWork(Random.nextRandom(7,1));
           $scope.dayCount++;
       };
 
       $scope.backlog.add(2,3,4);
-      $scope.backlog.add(4,3,5);
-      $scope.backlog.add(6,18,6);
-      $scope.backlog.add(4,12,6);
+      $scope.backlog.add(3,5,3);
+      $scope.backlog.add(6,18,4);
+      $scope.backlog.add(4,12,3);
   }]);

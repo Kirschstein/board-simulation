@@ -8,7 +8,7 @@ describe('board controllers', function() {
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
     	workDone = 2;
       random = {
-      	nextRandom : function(low,high) {
+      	nextRandom : function(high,low) {
       		return workDone;
       	}
       };
