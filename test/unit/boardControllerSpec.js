@@ -110,6 +110,11 @@ describe('board controllers', function() {
 	describe('working on tickets in testInProgress', function() {
 
 		beforeEach(function() {
+			scope.backlog.length = 0;
+
+			scope.backlog.add(2,3,4);
+			scope.backlog.add(4,3,5);
+
 			scope.backlog[0].pull();
 			scope.backlog[0].pull();
 			scope.newDay();
