@@ -40,6 +40,14 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
         $scope.testDone.length = 0;
       }
 
+
+      $scope.testInProgress.excessCapacity = 0;
+
+      $scope.testInProgress.showExcessCapacity = function() {
+        return $scope.testInProgress.excessCapacity > 0;
+      };
+
+
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
         $scope.devDone.length = 0;
@@ -109,6 +117,9 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
                 }
             }
           }
+          else {
+            $scope.testInProgress.excessCapacity = amount;
+          }
       };
 
       $scope.newDay = function() {
@@ -134,6 +145,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
           $scope.doTestWork(Random.nextRandom(7,1));
           $scope.dayCount++;
       };
+
 
       $scope.backlog.add(2,3,4);
       $scope.backlog.add(3,5,3);

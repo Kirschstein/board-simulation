@@ -32,6 +32,8 @@
 			<h2>test in progress (1)</h2>
            <div ng-repeat="card in testInProgress" ng-include="'partials/card-detail.html'">
            </div>            
+           <br/>
+           <div class="col-md-6" ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}</div >
     	</div>
 
     	<div class="col-md-2">
