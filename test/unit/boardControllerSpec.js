@@ -131,7 +131,9 @@ describe('board controllers', function() {
 
 			scope.backlog.add(2,3,4);
 			scope.backlog.add(4,3,5);
+			scope.backlog.add(4,3,5);
 
+			scope.backlog[0].pull();
 			scope.backlog[0].pull();
 			scope.backlog[0].pull();
 			scope.newDay();
@@ -225,6 +227,21 @@ describe('board controllers', function() {
 
 			expect(scope.testInProgress.showExcessCapacity()).toBe(true);
 			expect(scope.testInProgress.excessCapacity).toBe(excess);
+		});
+
+		it('allows excess qa capacity to be immediately spent on a ticket that was in devDone', function(){
+			scope.devDone.pull();
+			scope.devInProgress[0].pull();
+			
+			scope.newDay();
+			scope.newDay();
+
+			var excess = 2;
+			workDone = scope.testInProgress[0].qaCost + excess;
+
+			scope.newDay();
+
+			expect(scope.testInProgress.canUseExcessCapacity()).toBe(true);
 		});
 
 	});

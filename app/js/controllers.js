@@ -47,6 +47,10 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
         return $scope.testInProgress.excessCapacity > 0;
       };
 
+      $scope.testInProgress.canUseExcessCapacity = function() {
+        return $scope.testInProgress.showExcessCapacity() && $scope.devDone.length > 0;
+      }
+
 
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
