@@ -229,7 +229,7 @@ describe('board controllers', function() {
 			expect(scope.testInProgress.excessCapacity).toBe(excess);
 		});
 
-		it('allows excess qa capacity to be immediately spent on a ticket that was in devDone', function(){
+		it('allows excess qa capacity to be used on tickets in devDone', function(){
 			scope.devDone.pull();
 			scope.devInProgress[0].pull();
 			
@@ -242,6 +242,44 @@ describe('board controllers', function() {
 			scope.newDay();
 
 			expect(scope.testInProgress.canUseExcessCapacity()).toBe(true);
+		});
+
+		it('using excess capacity pulls tickets into dev done and reduces their qaCost remaining', function() {
+			scope.devDone.pull();
+			scope.devInProgress[0].pull();
+			
+			scope.newDay();
+			scope.newDay();
+
+			var excess = 2;
+			workDone = scope.testInProgress[0].qaCost + excess;
+
+			scope.newDay();
+			scope.testInProgress.useExcessCapacity();
+
+			expect(scope.testInProgress.length).toBe(1);
+			expect(scope.testInProgress[0].qaCost).toBe(3);
+			expect(scope.testInProgress.excessCapacity).toBe(0);
+			expect(scope.testInProgress.canUseExcessCapacity()).toBe(false);
+		});
+
+		it('excess qa capacity is lost when a ticket from dev in progress is pulled', function(){
+			scope.devDone.pull();
+			scope.devInProgress[0].pull();
+			scope.backlog.add(2,3,2);
+			scope.backlog[1].pull();
+			
+			scope.newDay();
+			scope.newDay();
+
+			var excess = 2;
+			workDone = scope.testInProgress[0].qaCost + excess;
+
+			scope.newDay();
+			scope.devInProgress[0].pull();
+
+			expect(scope.testInProgress.canUseExcessCapacity()).toBe(false);
+			expect(scope.testInProgress.excessCapacity).toBe(0);
 		});
 
 	});

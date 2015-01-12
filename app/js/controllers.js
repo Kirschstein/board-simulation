@@ -49,7 +49,15 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
 
       $scope.testInProgress.canUseExcessCapacity = function() {
         return $scope.testInProgress.showExcessCapacity() && $scope.devDone.length > 0;
-      }
+      };
+
+      $scope.testInProgress.useExcessCapacity = function() {
+        $scope.devDone.pull();
+        var excess = $scope.testInProgress.excessCapacity;
+        $scope.testInProgress.excessCapacity = 0;
+        $scope.doTestWork(excess);
+      };
+
 
 
       $scope.devDone.pull = function() {
@@ -76,6 +84,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
             if (index != -1) {
                 $scope.devDone.add(this);
                 $scope.devInProgress.splice(index, 1);
+                $scope.testInProgress.excessCapacity = 0;
               }
           };
       };
