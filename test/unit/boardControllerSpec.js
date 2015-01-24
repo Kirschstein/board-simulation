@@ -18,39 +18,7 @@ describe('board controllers', function() {
       ctrl = $controller('BoardCtrl', {$scope: scope, Random : random });
     }));
 
-	describe('a basic BoardCtrl', function(){
-
-		it('populates the board with a couple of tickets', function(){
-			expect(scope.backlog.length).toBe(4);
-		});
-
-		it('can pull from backlog if there is a spare dev to pick up the card', function() {
-			expect(scope.backlog[0].isReady()).toBe(true);
-		});
-
-		it('cannot pull from backlog if there is not a spare dev to pick up the card', function() {
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-
-			expect(scope.backlog[0].isReady()).toBe(false);
-		});
-
-		it('adds new tickets to the backlog on a new day', function() {
-			scope.newDay();
-
-			expect(scope.backlog.length).toBe(6);
-		});
-
-		it('can work on tickets when we go to next day', function(){
-			scope.backlog[0].pull();
-
-			scope.newDay();
-
-			expect(scope.devInProgress[0].devCost).toBe(1);
-		});
-
-
+    describe('misc', function() {
 		it('keeps a cumulative total of value released to live (per day)', function(){
 			scope.live.push({
 				value :2
@@ -66,9 +34,34 @@ describe('board controllers', function() {
 
 			expect(scope.cumulativeValue).toBe((2 * 2) + 3);
 		});
+    });
+
+	describe('pulling tickets from the backlog', function(){
+
+		it('cannot pull from backlog if there is not a spare dev to pick up the card', function() {
+			scope.backlog[0].pull();
+			scope.backlog[0].pull();
+			scope.backlog[0].pull();
+
+			expect(scope.backlog[0].isReady()).toBe(false);
+		});
+
+		it('adds 2 new tickets to the backlog on a new day', function() {
+			scope.newDay();
+
+			expect(scope.backlog.length).toBe(6);
+		});
+
+		it('can work on tickets when we go to next day', function(){
+			scope.backlog[0].pull();
+
+			scope.newDay();
+
+			expect(scope.devInProgress[0].devCost).toBe(1);
+		});
 	});
 
-	describe('after completing work on a ticket in dev done', function() {
+	describe('working on tickets in the dev columns', function() {
 
 		beforeEach(function() {
 			scope.backlog[0].pull();
@@ -129,7 +122,7 @@ describe('board controllers', function() {
 			expect(scope.devDone.isReady()).toBe(false);
 		});
 
-		it('working on a ticket in test in progress', function() {
+		it('a ticket worked on in test has its qaCost reduced', function() {
 			scope.devDone.pull();
 			scope.newDay();
 
@@ -158,35 +151,6 @@ describe('board controllers', function() {
 			scope.newDay();
 
 			expect(scope.testInProgress[0].qaCost).toBe(3);
-		});
-
-		it('test can be pushed to live when all testing is done on the cards', function(){
-			scope.devDone.pull();
-
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-
-			expect(scope.testInProgress.length).toBe(0);
-			expect(scope.testDone.isReady()).toBe(true);
-		});
-
-
-		it('pushing test to live empties test and puts cards in live', function(){
-			scope.devDone.pull();
-
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-			scope.newDay();
-
-			scope.testDone.pull();
-
-			expect(scope.testDone.length).toBe(0);
-			expect(scope.live.length).toBe(2);
 		});
 
 		it('shows excess capacity not used in test', function() {
@@ -257,5 +221,33 @@ describe('board controllers', function() {
 			expect(scope.testInProgress.excessCapacity).toBe(0);
 		});
 
+		it('test can be pushed to live when all testing is done on the cards', function(){
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			expect(scope.testInProgress.length).toBe(0);
+			expect(scope.testDone.isReady()).toBe(true);
+		});
+
+
+		it('pushing test to live empties test and puts cards in live', function(){
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			scope.testDone.pull();
+
+			expect(scope.testDone.length).toBe(0);
+			expect(scope.live.length).toBe(2);
+		});
 	});
 });
