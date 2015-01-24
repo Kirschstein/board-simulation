@@ -3,17 +3,16 @@
 describe('board controllers', function() {
   	beforeEach(module('boardSimulationApp'));
 
-	var scope, ctrl, $httpBackend, random, workDone;
+	var scope, ctrl, random, workDone;
 
-    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
-    	workDone = 2;
+    beforeEach(inject(function($rootScope, $controller) {
+	  workDone = 2;
       random = {
       	nextRandom : function(high,low) {
       		return workDone;
       	}
       };
 
-      $httpBackend = _$httpBackend_;
       scope = $rootScope.$new();
       ctrl = $controller('BoardCtrl', {$scope: scope, Random : random });
     }));

@@ -3,9 +3,9 @@
 describe('board controllers', function() {
   	beforeEach(module('boardSimulationApp'));
 
-	var scope, ctrl, $httpBackend, random, workDone;
+	var scope, ctrl, random, workDone;
 
-    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+    beforeEach (inject(function($rootScope, $controller) {
     	workDone = 2;
       random = {
       	nextRandom : function(high,low) {
@@ -13,7 +13,6 @@ describe('board controllers', function() {
       	}
       };
 
-      $httpBackend = _$httpBackend_;
       scope = $rootScope.$new();
       ctrl = $controller('BoardCtrl', {$scope: scope, Random : random });
     }));
@@ -248,6 +247,10 @@ describe('board controllers', function() {
 
 			expect(scope.testDone.length).toBe(0);
 			expect(scope.live.length).toBe(2);
+		});
+
+		it('has a chance to find a bug with a card when the qa have finished testing it', function() {
+
 		});
 	});
 });
