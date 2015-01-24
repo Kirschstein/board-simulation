@@ -1,7 +1,7 @@
 'use strict';
 
 describe('board controllers', function() {
-  	beforeEach(module('phonecatApp'));
+  	beforeEach(module('boardSimulationApp'));
 
 	var scope, ctrl, $httpBackend, random, workDone;
 
@@ -18,32 +18,35 @@ describe('board controllers', function() {
       ctrl = $controller('BoardCtrl', {$scope: scope, Random : random });
     }));
 
+	describe('a BoardCtrl columns', function(){
 
-	describe('a basic BoardCtrl', function(){
-
-	    it('has a backlog queue', function() {
+	    it('includes a backlog queue', function() {
 	    	expect(scope.backlog).toBeDefined();
 	    });
 
-	    it('has a dev in progress queue', function() {
+	    it('includes a dev in progress queue', function() {
 	    	expect(scope.devInProgress).toBeDefined();
 	    });
 
-	    it('has a dev done queue', function() {
+	    it('includes a dev done queue', function() {
 	    	expect(scope.devDone).toBeDefined();
 	    });
 
-	    it('has a test in progress queue', function() {
+	    it('includes a test in progress queue', function() {
 	    	expect(scope.testInProgress).toBeDefined();
 	    });
 
-	    it('has a test done queue', function() {
+	    it('includes a test done queue', function() {
 	    	expect(scope.testDone).toBeDefined();
 	    });
 
-	    it('has a live column', function() {
+	    it('includes a live column', function() {
 	    	expect(scope.live).toBeDefined();
 	    });
+	});
+
+
+	describe('a basic BoardCtrl', function(){
 
 		it('populates the board with a couple of tickets', function(){
 			expect(scope.backlog.length).toBe(4);

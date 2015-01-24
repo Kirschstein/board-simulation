@@ -11,7 +11,7 @@ describe('PhoneCat controllers', function() {
     });
   });
 
-  beforeEach(module('phonecatApp'));
+  beforeEach(module('boardSimulationApp'));
   beforeEach(module('phonecatServices'));
 
   describe('PhoneListCtrl', function(){

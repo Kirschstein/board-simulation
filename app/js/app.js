@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var phonecatApp = angular.module('phonecatApp', [
+var boardApp = angular.module('boardSimulationApp', [
   'ngRoute',
   'phonecatAnimations',
 
@@ -13,7 +13,7 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatServices'
 ]);
 
-phonecatApp.config(['$routeProvider',
+boardApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/phones', {
