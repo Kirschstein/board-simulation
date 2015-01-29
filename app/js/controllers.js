@@ -24,7 +24,7 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
 
 var boardControllers = angular.module('boardControllers', []);
 
-boardControllers.controller('BoardCtrl', ['$scope', 'Random', 
+boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
   function($scope, Random) {
       $scope.backlog = [];
       $scope.devInProgress = [];
@@ -58,8 +58,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random',
         $scope.testInProgress.excessCapacity = 0;
         $scope.doTestWork(excess);
       };
-
-
 
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );

@@ -36,3 +36,10 @@ boardServices.service('Random', function() {
 		return Math.floor(Math.seededRandom(max, min));
 	};
 });
+
+boardServices.service('BugFactory', function(Random) {
+
+	this.getAnyBugs = function(ticket) {
+		return 0;
+	};
+});
