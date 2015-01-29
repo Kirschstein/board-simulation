@@ -39,7 +39,7 @@ boardServices.service('Random', function() {
 
 boardServices.service('BugFactory', function(Random) {
 
-	this.getAnyBugs = function(ticket) {
-		return 0;
+	this.processTicket = function(ticket, backlog) {
+
 	};
 });

@@ -14,9 +14,7 @@ describe('a board with one ticket in test about ready to be completed', function
       };
 
       bugFactory = function() {
-      		this.getAnyBugs = function(ticket) {
-				return 0;
-			};
+
       };
 
       scope = $rootScope.$new();

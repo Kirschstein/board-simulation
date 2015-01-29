@@ -92,7 +92,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
           this.push({
             value : v,
             devCost : dev,
-            qaCost : qa,     
+            qaCost : qa,
+            type : 'story',     
             isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
             pull : function() { 
               var index = $scope.backlog.indexOf(this);

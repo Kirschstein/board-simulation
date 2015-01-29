@@ -51,6 +51,11 @@ describe('board controllers', function() {
 			expect(scope.backlog.length).toBe(6);
 		});
 
+		it('the tickets added to the backlog on a new day have a type of "story"', function() {
+			scope.newDay();
+			expect(scope.backlog[4].type).toBe('story');
+		});
+
 		it('can work on tickets when we go to next day', function(){
 			scope.backlog[0].pull();
 
