@@ -8,7 +8,6 @@ var boardApp = angular.module('boardSimulationApp', [
   'phonecatControllers',
   'boardControllers',
   'boardServices',
-  'phonecatServices'
 ]);
 
 boardApp.config(['$routeProvider',
