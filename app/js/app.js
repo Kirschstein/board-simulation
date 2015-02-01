@@ -4,7 +4,6 @@
 
 var boardApp = angular.module('boardSimulationApp', [
   'ngRoute',
-  'phonecatAnimations',
 
   'phonecatControllers',
   'boardControllers',
@@ -16,14 +15,6 @@ var boardApp = angular.module('boardSimulationApp', [
 boardApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/phones', {
-        templateUrl: 'partials/phone-list.html',
-        controller: 'PhoneListCtrl'
-      }).
-      when('/phones/:phoneId', {
-        templateUrl: 'partials/phone-detail.html',
-        controller: 'PhoneDetailCtrl'
-      }).
       when('/board', {
         templateUrl: 'partials/board.html',
         controller: 'BoardCtrl'

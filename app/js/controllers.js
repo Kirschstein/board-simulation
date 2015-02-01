@@ -21,7 +21,6 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
     }
   }]);
 
-
 var boardControllers = angular.module('boardControllers', []);
 
 boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',

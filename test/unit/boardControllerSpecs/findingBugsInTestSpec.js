@@ -27,7 +27,6 @@ describe('a board with one ticket in test about ready to be completed', function
       	}
       };
 
-
       scope = $rootScope.$new();
       ctrl = $controller('BoardCtrl', {$scope: scope, Random : random});
     }), 'Set up dependencies');
