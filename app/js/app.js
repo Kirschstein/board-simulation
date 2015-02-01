@@ -4,8 +4,6 @@
 
 var boardApp = angular.module('boardSimulationApp', [
   'ngRoute',
-
-  'phonecatControllers',
   'boardControllers',
   'boardServices',
 ]);
