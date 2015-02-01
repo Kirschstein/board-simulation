@@ -3,3 +3,11 @@
 	padding:1em;
 	margin:0.5em;
 }
+
+.story {
+	background-color: lightgreen;
+}
+
+.bug {
+	background-color: pink;	
+}
