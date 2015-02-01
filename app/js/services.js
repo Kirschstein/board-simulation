@@ -18,7 +18,7 @@ boardServices.service('Random', function() {
 
 
 	// stole this from the interwebs.
-	Math.seed = 6;
+	Math.seed = 11111;
 	 
 	// in order to work 'Math.seed' must NOT be undefined,
 	// so in any case, you HAVE to provide a Math.seed
@@ -40,6 +40,10 @@ boardServices.service('Random', function() {
 boardServices.service('BugFactory', function(Random) {
 
 	this.processTicket = function(ticket, backlog) {
-
+		var nextRandom = Random.nextRandom(6,1);
+		console.log(nextRandom);
+		if (nextRandom === 1) {
+			//backlog.addBug();
+		}
 	};
 });

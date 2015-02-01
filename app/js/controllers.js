@@ -25,7 +25,7 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
 var boardControllers = angular.module('boardControllers', []);
 
 boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
-  function($scope, Random) {
+  function($scope, Random, BugFactory) {
       $scope.backlog = [];
       $scope.devInProgress = [];
       $scope.devDone = [];
@@ -123,7 +123,10 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
           if ($scope.testInProgress[0]) {
             var diff = $scope.testInProgress[0].qaWork(amount);
             if ($scope.testInProgress[0].qaCost === 0) {
-                $scope.testDone.push($scope.testInProgress[0]);
+                console.log('finished ticket');
+                var finishedTicket = $scope.testInProgress[0];
+                BugFactory.processTicket(finishedTicket, $scope.backlog);
+                $scope.testDone.push(finishedTicket);
                 $scope.testInProgress.splice(0, 1);
                 if (diff > 0) {
                   $scope.doTestWork(diff);

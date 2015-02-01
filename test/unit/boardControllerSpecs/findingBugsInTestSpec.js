@@ -3,29 +3,42 @@
 describe('a board with one ticket in test about ready to be completed', function() {
 	beforeEach(module('boardSimulationApp'));
 
-	var scope, ctrl, workDone, bugFactory;
+	var scope, ctrl, randomResult;
+
+
+    beforeEach(function() {
+      module( function ($provide) {
+
+      var random = {
+        nextRandom : function(high,low) {
+          return randomResult;
+        }
+      };
+        $provide.value('Random', random);
+      });
+    });
+    
 
     beforeEach(inject(function($rootScope, $controller) {
-	  workDone = 2;
+	  randomResult = 2;
       var random = {
       	nextRandom : function(high,low) {
-      		return workDone;
+      		return randomResult;
       	}
       };
 
-      bugFactory = function() {
-
-      };
 
       scope = $rootScope.$new();
-      ctrl = $controller('BoardCtrl', {$scope: scope, Random : random, BugFactory : bugFactory});
+      ctrl = $controller('BoardCtrl', {$scope: scope, Random : random});
     }), 'Set up dependencies');
+
+
 
     beforeEach(function() {
     	scope.backlog.length = 0;
     	var value = 1;
     	var devCost = 2;
-    	var qaCost = 2;
+    	var qaCost = 1;
     	scope.backlog.add(value, devCost, qaCost);
     	scope.backlog[0].pull();
     	scope.newDay();
@@ -36,18 +49,17 @@ describe('a board with one ticket in test about ready to be completed', function
 
 
 	it('it creates a bug if we "roll a 1" after fininshing testing', function() {
-
-		// what part of the code rolls the die?
-		// where is the die held?
-		// what goes on to create the bug?
-		// where does the bug go?
-
+    console.log('=============');
+    randomResult = 1;
 		scope.newDay();
+    //expect(scope.backlog.length).toBe(5);
+  //  expect(scope.backlog[4].type).toBe('bug');
 	});
 
 	it('it does not create create a bug if we "roll" more than 1 after finishing testing', function() {
+    console.log('----------');
 		// some other context
-		scope.newDay();
+		//scope.newDay();
 	});
 
 });
