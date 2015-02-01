@@ -20,15 +20,8 @@ describe('a board with one ticket in test about ready to be completed', function
     
 
     beforeEach(inject(function($rootScope, $controller) {
-	  randomResult = 2;
-      var random = {
-      	nextRandom : function(high,low) {
-      		return randomResult;
-      	}
-      };
-
       scope = $rootScope.$new();
-      ctrl = $controller('BoardCtrl', {$scope: scope, Random : random});
+      ctrl = $controller('BoardCtrl', {$scope: scope});
     }), 'Set up dependencies');
 
 
@@ -48,15 +41,13 @@ describe('a board with one ticket in test about ready to be completed', function
 
 
 	it('it creates a bug if we "roll a 1" after fininshing testing', function() {
-    console.log('=============');
     randomResult = 1;
 		scope.newDay();
-    //expect(scope.backlog.length).toBe(5);
-  //  expect(scope.backlog[4].type).toBe('bug');
+    expect(scope.backlog.length).toBe(5);
+    expect(scope.backlog[4].type).toBe('bug');
 	});
 
 	it('it does not create create a bug if we "roll" more than 1 after finishing testing', function() {
-    console.log('----------');
 		// some other context
 		//scope.newDay();
 	});

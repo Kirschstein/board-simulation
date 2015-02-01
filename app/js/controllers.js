@@ -96,12 +96,41 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
             },
           });
       };
+      $scope.backlog.addBug = function() {
+          this.push({
+            value : 0,
+            devCost : 1,
+            qaCost : 1,
+            type : 'bug',     
+            isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
+            pull : function() { 
+              var index = $scope.backlog.indexOf(this);
+              if (index != -1) {
+                $scope.devInProgress.add(this);
+                $scope.backlog.splice(index, 1);
+              }
+            },
+            devWork : function(amount) {
+              this.devCost -= amount;
+              if (this.devCost < 0) {
+                this.devCost = 0;
+              }
+            },
+            qaWork : function(amount) {
+              var diff = amount - this.qaCost;
+              this.qaCost -= amount;
+              if (this.qaCost < 0) {
+                this.qaCost = 0;
+                return diff;    
+              }      
+            },
+          });
+      };
 
       $scope.doTestWork = function(amount) {
           if ($scope.testInProgress[0]) {
             var diff = $scope.testInProgress[0].qaWork(amount);
             if ($scope.testInProgress[0].qaCost === 0) {
-                console.log('finished ticket');
                 var finishedTicket = $scope.testInProgress[0];
                 BugFactory.processTicket(finishedTicket, $scope.backlog);
                 $scope.testDone.push(finishedTicket);
