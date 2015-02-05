@@ -31,7 +31,7 @@ describe('board controllers', function() {
 
 			scope.newDay();
 
-			expect(scope.cumulativeValue).toBe((2 * 2) + 3);
+			expect(scope.live.cumulativeValue).toBe((2 * 2) + 3);
 		});
     });
 

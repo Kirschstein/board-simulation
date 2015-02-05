@@ -22,20 +22,23 @@ boardApp.config(['$routeProvider',
 
 var boardControllers = angular.module('boardControllers', []);
 
-boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
-  function($scope, Random, BugFactory) {
+boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'LiveColumn',
+  function($scope, Random, BugFactory, LiveColumn) {
+      LiveColumn = LiveColumn || []
       $scope.backlog = [];
       $scope.devInProgress = [];
       $scope.devDone = [];
       $scope.testInProgress = [];
       $scope.testDone = [];
-      $scope.live = [];
+      var live = LiveColumn;
+      $scope.live = live;
       $scope.dayCount = 1;
       $scope.cumulativeValue = 0;
+      $scope.monkeys = 2;
 
       $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
       $scope.testDone.pull = function() { 
-        $scope.live.push.apply($scope.live, $scope.testDone );
+        live.push.apply(live, $scope.testDone );
         $scope.testDone.length = 0;
       }
 
@@ -167,6 +170,9 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
 
       $scope.newDay = function() {
 
+        live.newDay();
+        $scope.cumulativeValue = live.cumulativeValue;
+
         for(var i=0; i < 2; ++i) {
            var value = Random.nextRandom(7,1);
            var dice = Math.ceil(value / 2);
@@ -181,9 +187,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
           }
         };
 
-        for (var i=0; i < $scope.live.length; ++i) {
-          $scope.cumulativeValue += $scope.live[i].value;
-        };
+        
 
           $scope.doTestWork(Random.nextRandom(7,1));
           $scope.dayCount++;
@@ -199,6 +203,22 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
 
 /* Directives */
 ;'use strict';
+
+var boardControllers = angular.module('boardControllers');
+
+boardControllers.value('Backlog', function() {});
+
+var live = [];
+
+live.cumulativeValue = 0;
+
+live.newDay = function() {
+	for (var i=0; i < live.length; ++i) {
+		live.cumulativeValue += live[i].value;
+	};
+};
+
+boardControllers.value('LiveColumn', live);;'use strict';
 var boardServices = angular.module('boardServices', []);
 
 boardServices.service('Random', function() {
