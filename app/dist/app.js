@@ -30,15 +30,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
       $scope.devDone = [];
       $scope.testInProgress = [];
       $scope.testDone = [];
-      var live = LiveColumn;
-      $scope.live = live;
+      $scope.live = LiveColumn;
       $scope.dayCount = 1;
-      $scope.cumulativeValue = 0;
-      $scope.monkeys = 2;
 
       $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
       $scope.testDone.pull = function() { 
-        live.push.apply(live, $scope.testDone );
+        LiveColumn.push.apply(LiveColumn, $scope.testDone );
         $scope.testDone.length = 0;
       }
 
@@ -170,8 +167,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
 
       $scope.newDay = function() {
 
-        live.newDay();
-        $scope.cumulativeValue = live.cumulativeValue;
+        LiveColumn.newDay();
 
         for(var i=0; i < 2; ++i) {
            var value = Random.nextRandom(7,1);
