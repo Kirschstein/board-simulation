@@ -24,12 +24,16 @@ var boardControllers = angular.module('boardControllers', []);
 
 boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'LiveColumn',
   function($scope, Random, BugFactory, LiveColumn) {
+
       LiveColumn = LiveColumn || []
-      $scope.backlog = [];
-      $scope.devInProgress = [];
-      $scope.devDone = [];
-      $scope.testInProgress = [];
-      $scope.testDone = [];
+
+      var board = new Board();
+
+      $scope.backlog = board.backlog;
+      $scope.devInProgress = board.devInProgress;
+      $scope.devDone = board.devDone;
+      $scope.testInProgress = board.testInProgress;
+      $scope.testDone = board.testDone;
       $scope.live = LiveColumn;
       $scope.dayCount = 1;
 
@@ -87,64 +91,11 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
       };
 
       $scope.backlog.add = function(v, dev, qa) {
-          this.push({
-            value : v,
-            devCost : dev,
-            qaCost : qa,
-            type : 'story',     
-            isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
-            pull : function() { 
-              var index = $scope.backlog.indexOf(this);
-              if (index != -1) {
-                $scope.devInProgress.add(this);
-                $scope.backlog.splice(index, 1);
-              }
-            },
-            devWork : function(amount) {
-              this.devCost -= amount;
-              if (this.devCost < 0) {
-                this.devCost = 0;
-              }
-            },
-            qaWork : function(amount) {
-              var diff = amount - this.qaCost;
-              this.qaCost -= amount;
-              if (this.qaCost < 0) {
-                this.qaCost = 0;
-                return diff;    
-              }      
-            },
-          });
+          this.push(new Story(v, dev, qa, board));
       };
+
       $scope.backlog.addBug = function() {
-          this.push({
-            value : 0,
-            devCost : 1,
-            qaCost : 1,
-            type : 'bug',     
-            isReady : function() { return $scope.devInProgress.devCount > $scope.devInProgress.length;},
-            pull : function() { 
-              var index = $scope.backlog.indexOf(this);
-              if (index != -1) {
-                $scope.devInProgress.add(this);
-                $scope.backlog.splice(index, 1);
-              }
-            },
-            devWork : function(amount) {
-              this.devCost -= amount;
-              if (this.devCost < 0) {
-                this.devCost = 0;
-              }
-            },
-            qaWork : function(amount) {
-              var diff = amount - this.qaCost;
-              this.qaCost -= amount;
-              if (this.qaCost < 0) {
-                this.qaCost = 0;
-                return diff;    
-              }      
-            },
-          });
+          this.push(new Bug(0, 0, 1, board));
       };
 
       $scope.doTestWork = function(amount) {
@@ -194,8 +145,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
       $scope.backlog.add(3,5,3);
       $scope.backlog.add(6,18,4);
       $scope.backlog.add(4,12,3);
-  }]);
-;'use strict';
+  }]);;'use strict';
 
 /* Directives */
 ;'use strict';
@@ -215,6 +165,63 @@ live.newDay = function() {
 };
 
 boardControllers.value('LiveColumn', live);;'use strict';
+
+function Board() {
+	return {
+		backlog : [],
+     	devInProgress : [],
+      	devDone : [],
+      	testInProgress : [],
+        testDone : [],
+      	live : [] ,
+	}
+};'use strict';
+
+function Story(value, devCost, qaCost, board) {
+	var result = new Ticket(value, devCost, qaCost, board);
+	result.type = 'story';
+	return result;
+};
+
+function Bug(value, devCost, qaCost, board) {
+	var result = new Ticket(value, devCost, qaCost, board);
+	result.type = 'bug';
+	return result;
+};
+
+
+function Ticket(value, devCost, qaCost, board) {
+	return {
+		value : value,
+        devCost : devCost,
+        qaCost : qaCost,
+        type : 'story',     
+        isReady : function() { return board.devInProgress.devCount > board.devInProgress.length;},
+        pull : function() { 
+          var index = board.backlog.indexOf(this);
+          if (index != -1) {
+            board.devInProgress.add(this);
+            board.backlog.splice(index, 1);
+          }
+        },
+        devWork : function(amount) {
+          this.devCost -= amount;
+          if (this.devCost < 0) {
+            this.devCost = 0;
+          }
+        },
+        qaWork : function(amount) {
+          var diff = amount - this.qaCost;
+          this.qaCost -= amount;
+          if (this.qaCost < 0) {
+            this.qaCost = 0;
+            return diff;    
+          }      
+        },
+	};
+}
+
+;'use strict';
 var boardServices = angular.module('boardServices', []);
 
 boardServices.service('Random', function() {
