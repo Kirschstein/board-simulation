@@ -18,7 +18,6 @@ function Ticket(value, devCost, qaCost, board) {
 		value : value,
         devCost : devCost,
         qaCost : qaCost,
-        type : 'story',     
         isReady : function() { return board.devInProgress.devCount > board.devInProgress.length;},
         pull : function() { 
           var index = board.backlog.indexOf(this);

@@ -2,11 +2,8 @@
 
 var boardControllers = angular.module('boardControllers', []);
 
-boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'LiveColumn',
-  function($scope, Random, BugFactory, LiveColumn) {
-
-      LiveColumn = LiveColumn || []
-
+boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
+  function($scope, Random, BugFactory) {
       var board = new Board();
 
       $scope.backlog = board.backlog;
@@ -14,12 +11,13 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
       $scope.devDone = board.devDone;
       $scope.testInProgress = board.testInProgress;
       $scope.testDone = board.testDone;
-      $scope.live = LiveColumn;
+      $scope.live = board.live;
       $scope.dayCount = 1;
-
+      $scope.liveMetrics = new LiveMetrics(board);
+      
       $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
       $scope.testDone.pull = function() { 
-        LiveColumn.push.apply(LiveColumn, $scope.testDone );
+        $scope.live.push.apply($scope.live, $scope.testDone );
         $scope.testDone.length = 0;
       }
 
@@ -98,7 +96,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory', 'Liv
 
       $scope.newDay = function() {
 
-        LiveColumn.newDay();
+        $scope.liveMetrics.newDay();
 
         for(var i=0; i < 2; ++i) {
            var value = Random.nextRandom(7,1);

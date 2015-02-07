@@ -31,7 +31,7 @@ describe('board controllers', function() {
 
 			scope.newDay();
 
-			expect(scope.live.cumulativeValue).toBe((2 * 2) + 3);
+			expect(scope.liveMetrics.cumulativeValue).toBe((2 * 2) + 3);
 		});
     });
 
@@ -237,47 +237,20 @@ describe('board controllers', function() {
 			expect(scope.testInProgress.length).toBe(0);
 			expect(scope.testDone.isReady()).toBe(true);
 		});
+
+		it('pushing test to live empties test and puts cards in live', function(){
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			scope.testDone.pull();
+
+			expect(scope.testDone.length).toBe(0);
+			expect(scope.live.length).toBe(2);
+		});
 	});
 });
-
-
-
-/* Had to move this out into its own contained describe because
-   LiveColumn appeared to be being polluted by different tests
-   I don't know enough about angular magic to understand why yet
-*/
-describe('board controllers', function() {
-  	beforeEach(module('boardSimulationApp'));
-
-	var scope, ctrl, random, workDone;
-
-    beforeEach (inject(function($rootScope, $controller) {
-    	workDone = 2;
-      random = {
-      	nextRandom : function(high,low) {
-      		return workDone;
-      	}
-      };
-
-      scope = $rootScope.$new();
-      ctrl = $controller('BoardCtrl', {$scope: scope, Random : random });
-    }));
-
-
-	it('pushing test to live empties test and puts cards in live', function(){
-		scope.devDone.pull();
-
-		scope.newDay();
-		scope.newDay();
-		scope.newDay();
-		scope.newDay();
-		scope.newDay();
-
-		scope.testDone.pull();
-
-		expect(scope.testDone.length).toBe(0);
-		expect(scope.live.length).toBe(2);
-	});
-
-});
-
