@@ -6,6 +6,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
   function($scope, Random, BugFactory) {
       var board = new Board();
       var analysts = new Analysts(board, Random);
+      var testers = new Testers(board, Random, BugFactory);
+
       $scope.backlog = board.backlog;
       $scope.devInProgress = board.devInProgress;
       $scope.devDone = board.devDone;
@@ -15,29 +17,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.dayCount = 1;
       $scope.liveMetrics = new LiveMetrics(board);
       
-      $scope.testDone.isReady = function() { return $scope.testInProgress.length == 0 && $scope.testDone.length > 0;}
-      $scope.testDone.pull = function() { 
-        $scope.live.push.apply($scope.live, $scope.testDone );
-        $scope.testDone.length = 0;
-      }
-
-
-      $scope.testInProgress.excessCapacity = 0;
-
-      $scope.testInProgress.showExcessCapacity = function() {
-        return $scope.testInProgress.excessCapacity > 0;
-      };
-
-      $scope.testInProgress.canUseExcessCapacity = function() {
-        return $scope.testInProgress.showExcessCapacity() && $scope.devDone.length > 0;
-      };
-
-      $scope.testInProgress.useExcessCapacity = function() {
-        $scope.devDone.pull();
-        var excess = $scope.testInProgress.excessCapacity;
-        $scope.testInProgress.excessCapacity = 0;
-        $scope.doTestWork(excess);
-      };
 
       $scope.devDone.pull = function() {
         $scope.testInProgress.push.apply($scope.testInProgress, $scope.devDone );
@@ -76,28 +55,13 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
           this.push(new Bug(0, 0, 1, board));
       };
 
-      $scope.doTestWork = function(amount) {
-          if ($scope.testInProgress[0]) {
-            var diff = $scope.testInProgress[0].qaWork(amount);
-            if ($scope.testInProgress[0].qaCost === 0) {
-                var finishedTicket = $scope.testInProgress[0];
-                BugFactory.processTicket(finishedTicket, $scope.backlog);
-                $scope.testDone.push(finishedTicket);
-                $scope.testInProgress.splice(0, 1);
-                if (diff > 0) {
-                  $scope.doTestWork(diff);
-                }
-            }
-          }
-          else {
-            $scope.testInProgress.excessCapacity = amount;
-          }
-      };
+
 
       $scope.newDay = function() {
 
         $scope.liveMetrics.newDay();
         analysts.newDay();
+        testers.newDay();
 
        for (var i =0; i < $scope.devInProgress.length; ++i) {
           if ($scope.devInProgress[i]) {
@@ -105,7 +69,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
           }
         };
 
-          $scope.doTestWork(Random.nextRandom(7,1));
           $scope.dayCount++;
       };
 
