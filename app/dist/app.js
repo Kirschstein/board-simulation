@@ -25,7 +25,7 @@ var boardControllers = angular.module('boardControllers', []);
 boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
   function($scope, Random, BugFactory) {
       var board = new Board();
-
+      var analysts = new Analysts(board, Random);
       $scope.backlog = board.backlog;
       $scope.devInProgress = board.devInProgress;
       $scope.devDone = board.devDone;
@@ -117,32 +117,23 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.newDay = function() {
 
         $scope.liveMetrics.newDay();
+        analysts.newDay();
 
-        for(var i=0; i < 2; ++i) {
-           var value = Random.nextRandom(7,1);
-           var dice = Math.ceil(value / 2);
-           var devCost = Random.nextRandom(7 * dice, 1 * dice);
-           var qaCost = Math.min(4, Math.max(2, value));
-           $scope.backlog.add(value,devCost,qaCost);
-        };
-
-        for (var i =0; i < $scope.devInProgress.length; ++i) {
+       for (var i =0; i < $scope.devInProgress.length; ++i) {
           if ($scope.devInProgress[i]) {
             $scope.devInProgress[i].devWork(Random.nextRandom(6,1));
           }
         };
-
-        
 
           $scope.doTestWork(Random.nextRandom(7,1));
           $scope.dayCount++;
       };
 
 
-      $scope.backlog.add(2,3,4);
-      $scope.backlog.add(3,5,3);
-      $scope.backlog.add(6,18,4);
-      $scope.backlog.add(4,12,3);
+      $scope.backlog.push(new Story(2,3,4, board));
+      $scope.backlog.push(new Story(3,5,3, board));
+      $scope.backlog.push(new Story(6,18,4, board));
+      $scope.backlog.push(new Story(4,12,3, board));
   }]);;'use strict';
 
 /* Directives */
@@ -162,7 +153,26 @@ live.newDay = function() {
 	};
 };
 
-boardControllers.value('LiveColumn', live);;'use strict';
+boardControllers.value('LiveColumn', live);;'use strict'
+
+function Analysts(board, random) {
+
+	function createNewUserStories() {
+    	for(var i=0; i < 2; ++i) {
+           var value = random.nextRandom(7,1);
+           var howManyDice = Math.ceil(value / 2);
+           var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
+           var qaCost = Math.min(4, Math.max(2, value));
+           board.backlog.push(new Story(value, devCost, qaCost, board));
+		};
+	};
+
+	return {
+		newDay : function() {
+			createNewUserStories();
+		},
+	}
+};'use strict';
 
 function Board() {
 	return {
@@ -216,7 +226,7 @@ function Ticket(value, devCost, qaCost, board) {
           }      
         },
 	};
-}
+};
 
 ;'use strict';
 

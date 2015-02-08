@@ -41,5 +41,5 @@ function Ticket(value, devCost, qaCost, board) {
           }      
         },
 	};
-}
+};
 
