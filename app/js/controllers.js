@@ -26,16 +26,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
         $scope.liveMetrics
       ];    
   
-
-      $scope.backlog.add = function(v, dev, qa) {
-          this.push(new Story(v, dev, qa, board));
-      };
-
-      $scope.backlog.addBug = function() {
-          this.push(new Bug(0, 0, 1, board));
-      };
-
-
       $scope.newDay = function() {
         for(var i=0; i < newDayListeners.length; i++) {
           newDayListeners[i].newDay();

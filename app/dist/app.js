@@ -46,16 +46,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
         $scope.liveMetrics
       ];    
   
-
-      $scope.backlog.add = function(v, dev, qa) {
-          this.push(new Story(v, dev, qa, board));
-      };
-
-      $scope.backlog.addBug = function() {
-          this.push(new Bug(0, 0, 1, board));
-      };
-
-
       $scope.newDay = function() {
         for(var i=0; i < newDayListeners.length; i++) {
           newDayListeners[i].newDay();
@@ -63,10 +53,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
         $scope.dayCount++;
       };
 
-      $scope.backlog.push(new Story(2,3,4, board));
-      $scope.backlog.push(new Story(3,5,3, board));
-      $scope.backlog.push(new Story(6,18,4, board));
-      $scope.backlog.push(new Story(4,12,3, board));
+      analysts.seedBoard();
   }]);;'use strict';
 
 /* Directives */
@@ -100,22 +87,41 @@ function Analysts(board, random) {
 		};
 	};
 
+	function seedBoard() {
+      board.backlog.push(new Story(2,3,4, board));
+      board.backlog.push(new Story(3,5,3, board));
+      board.backlog.push(new Story(6,18,4, board));
+      board.backlog.push(new Story(4,12,3, board));
+	};
+
 	return {
 		newDay : function() {
 			createNewUserStories(2);
 		},
+		seedBoard : seedBoard,
+
 	}
 };'use strict';
 
 function Board() {
-	return {
+	var result = {
 		backlog : [],
      	devInProgress : [],
       	devDone : [],
       	testInProgress : [],
         testDone : [],
       	live : [] ,
-	}
+	};
+
+	result.backlog.add = function(v, dev, qa) {
+	  this.push(new Story(v, dev, qa, result));
+	};
+
+	result.backlog.addBug = function() {
+	  this.push(new Bug(0, 0, 1, result));
+	};
+
+	return result;
 };'use strict';
 
 function Story(value, devCost, qaCost, board) {
