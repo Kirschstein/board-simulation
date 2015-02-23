@@ -31,7 +31,7 @@ describe('a board with one ticket in test about ready to be completed', function
     	var value = 1;
     	var devCost = 2;
     	var qaCost = 1;
-    	scope.backlog.add(value, devCost, qaCost);
+    	scope.backlog.addStory(value, devCost, qaCost);
     	scope.backlog[0].pull();
     	scope.newDay();
     	scope.devInProgress[0].pull();

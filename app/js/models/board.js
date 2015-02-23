@@ -10,7 +10,7 @@ function Board() {
       	live : [] ,
 	};
 
-	result.backlog.add = function(v, dev, qa) {
+	result.backlog.addStory = function(v, dev, qa) {
 	  this.push(new Story(v, dev, qa, result));
 	};
 

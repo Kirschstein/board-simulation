@@ -101,9 +101,9 @@ describe('board controllers', function() {
 		beforeEach(function() {
 			scope.backlog.length = 0;
 
-			scope.backlog.add(2,3,4);
-			scope.backlog.add(4,3,5);
-			scope.backlog.add(4,3,5);
+			scope.backlog.addStory(2,3,4);
+			scope.backlog.addStory(4,3,5);
+			scope.backlog.addStory(4,3,5);
 
 			scope.backlog[0].pull();
 			scope.backlog[0].pull();
@@ -209,7 +209,7 @@ describe('board controllers', function() {
 		it('excess qa capacity is lost when a ticket from dev in progress is pulled', function(){
 			scope.devDone.pull();
 			scope.devInProgress[0].pull();
-			scope.backlog.add(2,3,2);
+			scope.backlog.addStory(2,3,2);
 			scope.backlog[1].pull();
 			
 			scope.newDay();

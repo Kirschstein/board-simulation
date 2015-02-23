@@ -13,10 +13,10 @@ function Analysts(board, random) {
 	};
 
 	function seedBoard() {
-      board.backlog.push(new Story(2,3,4, board));
-      board.backlog.push(new Story(3,5,3, board));
-      board.backlog.push(new Story(6,18,4, board));
-      board.backlog.push(new Story(4,12,3, board));
+      board.backlog.addStory(2,3,4);
+      board.backlog.addStory(3,5,3);
+      board.backlog.addStory(6,18,4);
+      board.backlog.addStory(4,12,3);
 	};
 
 	return {
