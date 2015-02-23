@@ -38,7 +38,6 @@ function Developers(board, random) {
     };
   };
 
-
   return {
   	newDay : function() {
   		doDevWork();

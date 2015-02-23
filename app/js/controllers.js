@@ -17,8 +17,14 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.live = board.live;
       $scope.dayCount = 1;
       $scope.liveMetrics = new LiveMetrics(board);
-      
+  
 
+      var newDayListeners = [
+        analysts,
+        developers,
+        testers,
+        $scope.liveMetrics
+      ];    
   
 
       $scope.backlog.add = function(v, dev, qa) {
@@ -30,20 +36,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       };
 
 
-
       $scope.newDay = function() {
-
-        $scope.liveMetrics.newDay();
-        analysts.newDay();
-        testers.newDay();
-        developers.newDay();
-
+        for(var i=0; i < newDayListeners.length; i++) {
+          newDayListeners[i].newDay();
+        }
         $scope.dayCount++;
       };
 
-
-      $scope.backlog.push(new Story(2,3,4, board));
-      $scope.backlog.push(new Story(3,5,3, board));
-      $scope.backlog.push(new Story(6,18,4, board));
-      $scope.backlog.push(new Story(4,12,3, board));
+      analysts.seedBoard();
   }]);

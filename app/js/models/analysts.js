@@ -2,8 +2,8 @@
 
 function Analysts(board, random) {
 
-	function createNewUserStories() {
-    	for(var i=0; i < 2; ++i) {
+	function createNewUserStories(storiesToCreate) {
+    	for(var i=0; i < storiesToCreate; ++i) {
            var value = random.nextRandom(7,1);
            var howManyDice = Math.ceil(value / 2);
            var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
@@ -12,9 +12,18 @@ function Analysts(board, random) {
 		};
 	};
 
+	function seedBoard() {
+      board.backlog.push(new Story(2,3,4, board));
+      board.backlog.push(new Story(3,5,3, board));
+      board.backlog.push(new Story(6,18,4, board));
+      board.backlog.push(new Story(4,12,3, board));
+	};
+
 	return {
 		newDay : function() {
-			createNewUserStories();
+			createNewUserStories(2);
 		},
+		seedBoard : seedBoard,
+
 	}
 }

@@ -37,8 +37,14 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.live = board.live;
       $scope.dayCount = 1;
       $scope.liveMetrics = new LiveMetrics(board);
-      
+  
 
+      var newDayListeners = [
+        analysts,
+        developers,
+        testers,
+        $scope.liveMetrics
+      ];    
   
 
       $scope.backlog.add = function(v, dev, qa) {
@@ -50,17 +56,12 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       };
 
 
-
       $scope.newDay = function() {
-
-        $scope.liveMetrics.newDay();
-        analysts.newDay();
-        testers.newDay();
-        developers.newDay();
-
+        for(var i=0; i < newDayListeners.length; i++) {
+          newDayListeners[i].newDay();
+        }
         $scope.dayCount++;
       };
-
 
       $scope.backlog.push(new Story(2,3,4, board));
       $scope.backlog.push(new Story(3,5,3, board));
@@ -89,8 +90,8 @@ boardControllers.value('LiveColumn', live);;'use strict'
 
 function Analysts(board, random) {
 
-	function createNewUserStories() {
-    	for(var i=0; i < 2; ++i) {
+	function createNewUserStories(storiesToCreate) {
+    	for(var i=0; i < storiesToCreate; ++i) {
            var value = random.nextRandom(7,1);
            var howManyDice = Math.ceil(value / 2);
            var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
@@ -101,7 +102,7 @@ function Analysts(board, random) {
 
 	return {
 		newDay : function() {
-			createNewUserStories();
+			createNewUserStories(2);
 		},
 	}
 };'use strict';
@@ -199,7 +200,6 @@ function Developers(board, random) {
       }
     };
   };
-
 
   return {
   	newDay : function() {
