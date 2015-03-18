@@ -113,9 +113,15 @@ function Board() {
 	};
 
 	result.backlog.addStory = function(v, dev, qa) {
-      var story = new Story(v,dev,qa,result);
       ticketsCreated++;
-      story.id = ticketsCreated;
+      var options = {
+      	value : v,
+      	devCost : dev,
+      	qaCost : qa,
+  		board : result,
+  		id : ticketsCreated
+      };
+      var story = new Story(options);
 	  this.push(story);
 	};
 
@@ -130,8 +136,9 @@ function Board() {
 	return result;
 };'use strict';
 
-function Story(value, devCost, qaCost, board) {
-	var result = new Ticket(value, devCost, qaCost, board);
+function Story(options) {
+	var result = new Ticket(options.value, options.devCost, options.qaCost, options.board);
+  result.id = options.id;
 	result.type = 'story';
 	return result;
 };

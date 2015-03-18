@@ -12,9 +12,15 @@ function Board() {
 	};
 
 	result.backlog.addStory = function(v, dev, qa) {
-      var story = new Story(v,dev,qa,result);
       ticketsCreated++;
-      story.id = ticketsCreated;
+      var options = {
+      	value : v,
+      	devCost : dev,
+      	qaCost : qa,
+  		board : result,
+  		id : ticketsCreated
+      };
+      var story = new Story(options);
 	  this.push(story);
 	};
 
