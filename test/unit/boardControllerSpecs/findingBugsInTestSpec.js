@@ -17,14 +17,11 @@ describe('a board with one ticket in test about ready to be completed', function
         $provide.value('Random', random);
       });
     });
-    
 
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
       ctrl = $controller('BoardCtrl', {$scope: scope});
     }), 'Set up dependencies');
-
-
 
     beforeEach(function() {
     	scope.backlog.length = 0;
@@ -48,8 +45,9 @@ describe('a board with one ticket in test about ready to be completed', function
 	});
 
 	it('it does not create create a bug if we "roll" more than 1 after finishing testing', function() {
-		// some other context
-		//scope.newDay();
+    randomResult = 2;
+    scope.newDay();
+    expect(scope.backlog.length).toBe(4);
+    expect(scope.backlog[3].type).toBe('story');
 	});
-
 });

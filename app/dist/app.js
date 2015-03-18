@@ -37,7 +37,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.live = board.live;
       $scope.dayCount = 1;
       $scope.liveMetrics = new LiveMetrics(board);
-  
 
       var newDayListeners = [
         analysts,
@@ -83,7 +82,7 @@ function Analysts(board, random) {
            var howManyDice = Math.ceil(value / 2);
            var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
            var qaCost = Math.min(4, Math.max(2, value));
-           board.backlog.push(new Story(value, devCost, qaCost, board));
+           board.backlog.addStory(value, devCost, qaCost);
 		};
 	};
 
@@ -99,11 +98,11 @@ function Analysts(board, random) {
 			createNewUserStories(2);
 		},
 		seedBoard : seedBoard,
-
 	}
 };'use strict';
 
 function Board() {
+	var ticketsCreated = 0;
 	var result = {
 		backlog : [],
      	devInProgress : [],
@@ -114,11 +113,18 @@ function Board() {
 	};
 
 	result.backlog.addStory = function(v, dev, qa) {
-	  this.push(new Story(v, dev, qa, result));
+      var story = new Story(v,dev,qa,result);
+      ticketsCreated++;
+      story.id = ticketsCreated;
+	  this.push(story);
 	};
 
 	result.backlog.addBug = function() {
 	  this.push(new Bug(0, 0, 1, result));
+	};
+
+	result.addStory = function(v, dev, qa) {
+		result.backlog.addStory(v, dev, qa);
 	};
 
 	return result;

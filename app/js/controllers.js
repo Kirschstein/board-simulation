@@ -17,7 +17,6 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       $scope.live = board.live;
       $scope.dayCount = 1;
       $scope.liveMetrics = new LiveMetrics(board);
-  
 
       var newDayListeners = [
         analysts,
