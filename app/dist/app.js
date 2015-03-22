@@ -113,19 +113,6 @@ function Board() {
       	live : [] ,
 	};
 
-	result.backlog.addStory = function(v, dev, qa) {
-      ticketsCreated++;
-      var options = {
-      	value : v,
-      	devCost : dev,
-      	qaCost : qa,
-  		board : result,
-  		id : ticketsCreated
-      };
-      var story = new Story(options);
-	  this.push(story);
-	};
-
 	result.addStory = function(v, dev, qa) {
       ticketsCreated++;
       var options = {
