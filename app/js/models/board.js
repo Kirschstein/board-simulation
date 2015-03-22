@@ -34,6 +34,7 @@ function Board() {
 
 	result.addBug = function(ticket) {
 		ticket.isBlocked = function() { return true;}
+		result.backlog.addBug();
 	};
 
 	return result;
