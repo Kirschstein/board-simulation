@@ -32,5 +32,9 @@ function Board() {
 		result.backlog.addStory(v, dev, qa);
 	};
 
+	result.addBug = function(ticket) {
+		ticket.isBlocked = function() { return true;}
+	};
+
 	return result;
 }

@@ -5,7 +5,6 @@ describe('a board with one ticket in test about ready to be completed', function
 
 	var scope, ctrl, randomResult;
 
-
     beforeEach(function() {
       module( function ($provide) {
 
