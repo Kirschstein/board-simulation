@@ -1,9 +1,11 @@
 'use strict';
 
 describe('adding bugs to the board', function() {
-	it('blocks the ticket associated with it', function() {
-		var board = new Board();
-		var ticket = new Story({
+	var board, ticket;
+
+	beforeEach(function() {
+		board = new Board();
+		ticket = new Story({
 			value : 1,
 			devCost : 1,
 			qaCost : 1,
@@ -12,20 +14,13 @@ describe('adding bugs to the board', function() {
 		});
 
 		board.addBug(ticket);
+	}, 'create a bug on the board found from a ticket');
+
+	it('blocks the ticket associated with it', function() {
 		expect(ticket.isBlocked()).toBe(true);
 	});	
 
 	it('adds a bug to the backlog', function() {
-		var board = new Board();
-		var ticket = new Story({
-			value : 1,
-			devCost : 1,
-			qaCost : 1,
-			id : 1,
-			board : board
-		});
-
-		board.addBug(ticket);
 		expect(board.backlog.length).toBe(1);
 	});
 
