@@ -24,17 +24,13 @@ function Board() {
 	  this.push(story);
 	};
 
-	result.backlog.addBug = function() {
-	  this.push(new Bug(0, 0, 1, result));
-	};
-
 	result.addStory = function(v, dev, qa) {
 		result.backlog.addStory(v, dev, qa);
 	};
 
 	result.addBug = function(ticket) {
 		ticket.isBlocked = function() { return true;}
-		result.backlog.addBug();
+		result.backlog.push(new Bug(0, 0, 1, result));
 	};
 
 	return result;
