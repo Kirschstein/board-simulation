@@ -3,7 +3,6 @@ var boardServices = angular.module('boardServices', []);
 
 boardServices.service('Random', function() {
 
-
 	// stole this from the interwebs.
 	Math.seed = 1234567;
 	 
@@ -26,10 +25,10 @@ boardServices.service('Random', function() {
 
 boardServices.service('BugFactory', function(Random) {
 
-	this.processTicket = function(ticket, backlog) {
+	this.processTicket = function(ticket, backlog, board) {
 		var nextRandom = Random.nextRandom(5,1);
 		if (nextRandom === 1) {
-			backlog.addBug();
+			board.addBug(ticket);
 		}
 	};
 });

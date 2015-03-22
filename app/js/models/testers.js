@@ -33,7 +33,7 @@ function Testers(board, random, bugFactory) {
 	    var diff = board.testInProgress[0].qaWork(amount);
 	    if (board.testInProgress[0].qaCost === 0) {
 	        var finishedTicket = board.testInProgress[0];
-	        bugFactory.processTicket(finishedTicket, board.backlog);
+	        bugFactory.processTicket(finishedTicket, board.backlog, board);
 	        board.testDone.push(finishedTicket);
 	        board.testInProgress.splice(0, 1);
 	        if (diff > 0) {

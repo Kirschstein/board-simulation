@@ -49,4 +49,5 @@ describe('a board with one ticket in test about ready to be completed', function
     expect(scope.backlog.length).toBe(4);
     expect(scope.backlog[3].type).toBe('story');
 	});
+  
 });

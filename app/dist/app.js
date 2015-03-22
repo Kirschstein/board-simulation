@@ -279,7 +279,7 @@ function Testers(board, random, bugFactory) {
 	    var diff = board.testInProgress[0].qaWork(amount);
 	    if (board.testInProgress[0].qaCost === 0) {
 	        var finishedTicket = board.testInProgress[0];
-	        bugFactory.processTicket(finishedTicket, board.backlog);
+	        bugFactory.processTicket(finishedTicket, board.backlog, board);
 	        board.testDone.push(finishedTicket);
 	        board.testInProgress.splice(0, 1);
 	        if (diff > 0) {
@@ -301,7 +301,6 @@ function Testers(board, random, bugFactory) {
 var boardServices = angular.module('boardServices', []);
 
 boardServices.service('Random', function() {
-
 
 	// stole this from the interwebs.
 	Math.seed = 1234567;
@@ -325,10 +324,11 @@ boardServices.service('Random', function() {
 
 boardServices.service('BugFactory', function(Random) {
 
-	this.processTicket = function(ticket, backlog) {
+	this.processTicket = function(ticket, backlog, board) {
 		var nextRandom = Random.nextRandom(5,1);
 		if (nextRandom === 1) {
-			backlog.addBug();
+			//backlog.addBug();
+			board.addBug(ticket);
 		}
 	};
 });
