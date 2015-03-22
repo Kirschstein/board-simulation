@@ -9,6 +9,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
       var testers = new Testers(board, Random, BugFactory);
       var developers = new Developers(board, Random);
 
+      $scope.board = board;
       $scope.backlog = board.backlog;
       $scope.devInProgress = board.devInProgress;
       $scope.devDone = board.devDone;

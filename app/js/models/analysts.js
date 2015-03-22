@@ -8,15 +8,15 @@ function Analysts(board, random) {
            var howManyDice = Math.ceil(value / 2);
            var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
            var qaCost = Math.min(4, Math.max(2, value));
-           board.backlog.addStory(value, devCost, qaCost);
+           board.addStory(value, devCost, qaCost);
 		};
 	};
 
 	function seedBoard() {
-      board.backlog.addStory(2,3,4);
-      board.backlog.addStory(3,5,3);
-      board.backlog.addStory(6,18,4);
-      board.backlog.addStory(4,12,3);
+      board.addStory(2,3,4);
+      board.addStory(3,5,3);
+      board.addStory(6,18,4);
+      board.addStory(4,12,3);
 	};
 
 	return {

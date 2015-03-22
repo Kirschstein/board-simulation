@@ -25,7 +25,16 @@ function Board() {
 	};
 
 	result.addStory = function(v, dev, qa) {
-		result.backlog.addStory(v, dev, qa);
+      ticketsCreated++;
+      var options = {
+      	value : v,
+      	devCost : dev,
+      	qaCost : qa,
+  		board : result,
+  		id : ticketsCreated
+      };
+      var story = new Story(options);
+	  result.backlog.push(story);
 	};
 
 	result.addBug = function(ticket) {
