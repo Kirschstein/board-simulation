@@ -16,8 +16,8 @@ describe('adding bugs to the board', function() {
 		board.addBug(ticket);
 	}, 'create a bug on the board found from a ticket');
 
-	it('blocks the ticket associated with it', function() {
-		expect(ticket.isBlocked()).toBe(true);
+	it('bugs the ticket associated with it', function() {
+		expect(ticket.hasBug()).toBe(true);
 	});	
 
 	it('adds a bug to the backlog', function() {
