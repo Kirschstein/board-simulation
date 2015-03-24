@@ -42,6 +42,9 @@ function Ticket(value, devCost, qaCost, board) {
             return diff;    
           }      
         },
+        process : function(backlog, bugFactory) {
+          
+        },
 	};
 };
 
