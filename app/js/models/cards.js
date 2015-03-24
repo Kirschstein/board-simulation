@@ -43,7 +43,7 @@ function Ticket(value, devCost, qaCost, board) {
           }      
         },
         process : function(backlog, bugFactory) {
-          
+          bugFactory.processTicket(this, backlog);
         },
 	};
 };

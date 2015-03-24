@@ -240,8 +240,6 @@ describe('board controllers', function() {
 			scope.newDay();
 
 			expect(scope.testInProgress.length).toBe(0);
-			console.log(scope.testDone[0].hasBug());
-			console.log(scope.testDone[1].hasBug());
 			expect(scope.testDone.isReady()).toBe(true);
 		});
 
