@@ -4,12 +4,18 @@ function Story(options) {
 	var result = new Ticket(options.value, options.devCost, options.qaCost, options.board);
   result.id = options.id;
 	result.type = 'story';
+  result.process = function(board, bugFactory) {
+                      bugFactory.processTicket(this, board);
+                   };
 	return result;
 };
 
-function Bug(value, devCost, qaCost, board) {
+function Bug(value, devCost, qaCost, board, spawningTicket) {
 	var result = new Ticket(value, devCost, qaCost, board);
 	result.type = 'bug';
+  result.process = function() {
+                      spawningTicket.hasBug = function() { return false; } ;
+                  };
 	return result;
 };
 
@@ -42,8 +48,8 @@ function Ticket(value, devCost, qaCost, board) {
             return diff;    
           }      
         },
-        process : function(backlog, bugFactory) {
-          bugFactory.processTicket(this, backlog);
+        process : function(board, bugFactory) {
+          bugFactory.processTicket(this, board);
         },
 	};
 };

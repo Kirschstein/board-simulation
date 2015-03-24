@@ -128,7 +128,7 @@ function Board() {
 
 	result.addBug = function(ticket) {
 		ticket.hasBug = function() { return true;}
-		result.backlog.push(new Bug(0, 0, 1, result));
+		result.backlog.push(new Bug(0, 0, 1, result, ticket));
 	};
 
 	return result;
@@ -138,12 +138,18 @@ function Story(options) {
 	var result = new Ticket(options.value, options.devCost, options.qaCost, options.board);
   result.id = options.id;
 	result.type = 'story';
+  result.process = function(board, bugFactory) {
+                      bugFactory.processTicket(this, board);
+                   };
 	return result;
 };
 
-function Bug(value, devCost, qaCost, board) {
+function Bug(value, devCost, qaCost, board, spawningTicket) {
 	var result = new Ticket(value, devCost, qaCost, board);
 	result.type = 'bug';
+  result.process = function() {
+                      spawningTicket.hasBug = function() { return false; } ;
+                  };
 	return result;
 };
 
@@ -176,8 +182,8 @@ function Ticket(value, devCost, qaCost, board) {
             return diff;    
           }      
         },
-        process : function(backlog, bugFactory) {
-          bugFactory.processTicket(this, backlog);
+        process : function(board, bugFactory) {
+          bugFactory.processTicket(this, board);
         },
 	};
 };
@@ -283,7 +289,6 @@ function Testers(board, random, bugFactory) {
 	    var diff = board.testInProgress[0].qaWork(amount);
 	    if (board.testInProgress[0].qaCost === 0) {
 	        var finishedTicket = board.testInProgress[0];
-	        //bugFactory.processTicket(finishedTicket, board);
           finishedTicket.process(board, bugFactory);
 	        board.testDone.push(finishedTicket);
 	        board.testInProgress.splice(0, 1);
