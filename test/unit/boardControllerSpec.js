@@ -126,6 +126,11 @@ describe('board controllers', function() {
 			expect(scope.devDone.isReady()).toBe(false);
 		});
 
+		it('pulled tickets do not have a bug on by default', function() {
+			scope.devDone.pull();
+			expect(scope.testInProgress[0].hasBug()).toBe(false);
+		});
+
 		it('a ticket worked on in test has its qaCost reduced', function() {
 			scope.devDone.pull();
 			scope.newDay();
@@ -235,6 +240,8 @@ describe('board controllers', function() {
 			scope.newDay();
 
 			expect(scope.testInProgress.length).toBe(0);
+			console.log(scope.testDone[0].hasBug());
+			console.log(scope.testDone[1].hasBug());
 			expect(scope.testDone.isReady()).toBe(true);
 		});
 
@@ -251,6 +258,20 @@ describe('board controllers', function() {
 
 			expect(scope.testDone.length).toBe(0);
 			expect(scope.live.length).toBe(2);
+		});
+
+		it('cannot push to live if a bug has been found in one of the tickets', function() {
+			scope.devDone.pull();
+
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+			scope.newDay();
+
+			scope.testDone[0].hasBug = function() { return true;}
+
+			expect(scope.testDone.isReady()).toBe(false);
 		});
 	});
 });

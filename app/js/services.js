@@ -26,7 +26,7 @@ boardServices.service('Random', function() {
 boardServices.service('BugFactory', function(Random) {
 
 	this.processTicket = function(ticket, backlog, board) {
-		var nextRandom = Random.nextRandom(5,1);
+		var nextRandom = Random.nextRandom(1,4);
 		if (nextRandom === 1) {
 			board.addBug(ticket);
 		}

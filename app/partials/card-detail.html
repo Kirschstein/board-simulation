@@ -3,4 +3,5 @@
 	dev cost: {{card.devCost}}<br/>
 	qa cost: {{card.qaCost}}<br/>
 	<a ng-show="card.isReady()" class="btn btn-primary btn-xs" ng-click="card.pull()">pull</a>
+	<a ng-show="card.hasBug()" class="btn btn-danger btn-xs">BUGGED</a>
 </div>

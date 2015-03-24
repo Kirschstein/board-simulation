@@ -3,6 +3,13 @@
 function Testers(board, random, bugFactory) {
 
   board.testDone.isReady = function() { 
+    
+    for (var i=0; i < board.testDone.length; i++) {
+      if (board.testDone[i].hasBug()) {
+          return false;
+      }
+    }
+
   	return board.testInProgress.length == 0 && board.testDone.length > 0;
   }
 

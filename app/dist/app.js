@@ -154,6 +154,7 @@ function Ticket(value, devCost, qaCost, board) {
         devCost : devCost,
         qaCost : qaCost,
         isReady : function() { return board.devInProgress.devCount > board.devInProgress.length;},
+        hasBug : function() { return false;},
         pull : function() { 
           var index = board.backlog.indexOf(this);
           if (index != -1) {
@@ -242,6 +243,13 @@ function LiveMetrics(board) {
 function Testers(board, random, bugFactory) {
 
   board.testDone.isReady = function() { 
+    
+    for (var i=0; i < board.testDone.length; i++) {
+      if (board.testDone[i].hasBug()) {
+          return false;
+      }
+    }
+
   	return board.testInProgress.length == 0 && board.testDone.length > 0;
   }
 
@@ -318,7 +326,7 @@ boardServices.service('Random', function() {
 boardServices.service('BugFactory', function(Random) {
 
 	this.processTicket = function(ticket, backlog, board) {
-		var nextRandom = Random.nextRandom(5,1);
+		var nextRandom = Random.nextRandom(1,4);
 		if (nextRandom === 1) {
 			board.addBug(ticket);
 		}
