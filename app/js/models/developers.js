@@ -20,7 +20,7 @@ function Developers(board, random) {
       card.isReady = function() {
           return this.devCost <= 0;
       };
-      card.pull = function() {
+      card.push = function() {
         var index = board.devInProgress.indexOf(this);
         if (index != -1) {
             board.devDone.add(this);

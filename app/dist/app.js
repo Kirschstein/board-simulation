@@ -161,15 +161,12 @@ function Ticket(value, devCost, qaCost, board) {
         qaCost : qaCost,
         isReady : function() { return board.devInProgress.devCount > board.devInProgress.length;},
         hasBug : function() { return false;},
-        pull : function() { 
+        push : function() { 
           var index = board.backlog.indexOf(this);
           if (index != -1) {
             board.devInProgress.add(this);
             board.backlog.splice(index, 1);
           }
-        },
-        push : function() { 
-          this.pull();
         },
         devWork : function(amount) {
           this.devCost -= amount;
@@ -213,7 +210,7 @@ function Developers(board, random) {
       card.isReady = function() {
           return this.devCost <= 0;
       };
-      card.pull = function() {
+      card.push = function() {
         var index = board.devInProgress.indexOf(this);
         if (index != -1) {
             board.devDone.add(this);
