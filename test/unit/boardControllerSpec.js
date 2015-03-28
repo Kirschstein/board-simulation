@@ -37,10 +37,10 @@ describe('board controllers', function() {
 
 	describe('pulling tickets from the backlog', function(){
 
-		it('cannot pull from backlog if there is not a spare dev to pick up the card', function() {
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
+		it('cannot push from backlog if there is not a spare dev to pick up the card', function() {
+			scope.backlog[0].push();
+			scope.backlog[0].push();
+			scope.backlog[0].push();
 
 			expect(scope.backlog[0].isReady()).toBe(false);
 		});
@@ -57,7 +57,7 @@ describe('board controllers', function() {
 		});
 
 		it('can work on tickets when we go to next day', function(){
-			scope.backlog[0].pull();
+			scope.backlog[0].push();
 
 			scope.newDay();
 
@@ -68,29 +68,29 @@ describe('board controllers', function() {
 	describe('working on tickets in the dev columns', function() {
 
 		beforeEach(function() {
-			scope.backlog[0].pull();
+			scope.backlog[0].push();
 			scope.newDay();
 			scope.newDay();
-		}, 'We pull one ticket into dev in progress and it is completed');
+		}, 'We push one ticket into dev in progress and it is completed');
 
 		it('wont let a card go below 0 dev cost when working on it', function(){
 			expect(scope.devInProgress[0].devCost).toBe(0);
 		});
 
-		it('allows us to pull finished dev tickets into dev done', function(){
-			scope.devInProgress[0].pull();
+		it('allows us to push finished dev tickets into dev done', function(){
+			scope.devInProgress[0].push();
 
 			expect(scope.devDone.length).toBe(1);
 		});
 
 		it('card does not show as ready after pushing into dev done', function() {
-			scope.devInProgress[0].pull();
+			scope.devInProgress[0].push();
 
 			expect(scope.devDone[0].isReady()).toBe(false);
 		});
 
-		it('dev done can be pulled if it has an item in it', function(){
-			scope.devInProgress[0].pull();
+		it('dev done can be pushed into test if it has an item in it', function(){
+			scope.devInProgress[0].push();
 
 			expect(scope.devDone.isReady()).toBe(true);
 		});
@@ -105,14 +105,14 @@ describe('board controllers', function() {
 			scope.board.addStory(4,3,5);
 			scope.board.addStory(4,3,5);
 
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
-			scope.backlog[0].pull();
+			scope.backlog[0].push();
+			scope.backlog[0].push();
+			scope.backlog[0].push();
 			scope.newDay();
 			scope.newDay();
-			scope.devInProgress[0].pull();
-			scope.devInProgress[0].pull();
-		}, 'Complete two tickets and pull them into devDone');
+			scope.devInProgress[0].push();
+			scope.devInProgress[0].push();
+		}, 'Complete two tickets and push them into devDone');
 
 		it('pulling dev done into test moves all of the tickets', function(){
 			scope.devDone.pull();
