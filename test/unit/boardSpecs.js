@@ -1,4 +1,3 @@
-
 describe('the board', function() {
 
 	it('adds a story to the backlog with a unique id', function() {
