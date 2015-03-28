@@ -33,7 +33,7 @@
            <div ng-repeat="card in testInProgress" ng-include="'partials/card-detail.html'">
            </div>            
            <br/>
-           <div class="col-md-6" ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}
+           <div ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}
             <a ng-show="testInProgress.canUseExcessCapacity()" class="btn btn-primary btn-xs" ng-click="testInProgress.useExcessCapacity()">use</a>
 
            </div>
@@ -41,7 +41,7 @@
 
     	<div class="col-md-2">
 			<h2>test done
-              <a ng-show="testDone.isReady()" class="btn btn-primary btn-xs" ng-click="testDone.pull()">pull</a>
+              <a ng-show="testDone.isReady()" class="btn btn-primary btn-xs" ng-click="testDone.pull()">push to live</a>
                       </h2>
            <div ng-repeat="card in testDone" ng-include="'partials/card-detail.html'">
            </div>    
