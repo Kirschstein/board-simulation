@@ -1,62 +1,64 @@
  
-    <div class="row" style="margin-top:5em;margin-left:2em;">
+<div class="row" style="margin-top:5em;margin-left:2em;">
         Day {{dayCount}}<br/>
         Tickets released {{live.length}}<br/>
         Cumulative Value {{liveMetrics.cumulativeValue}}<br/>
         <a class="btn btn-primary" ng-click="newDay()">New Day</a>
-    </div>
+</div>
 
-    <div class="row">
-    	<div class="col-md-2">
-		   <h2>backlog
-        <img src="/img/stickman.gif" />
-        <img src="/img/stickman.gif" />
-       </h2>
-           <div ng-repeat="card in backlog" ng-include="'partials/card-detail.html'"></div>
-    	</div>
+<div class="row the-board">
+	<div class="col-md-2">
+   <h2>backlog <img src="/img/stickman.gif" /> <img src="/img/stickman.gif" /></h2>
+   <p class="explanation">Tickets can be pushed into <em>dev in progress</em> if there is a spare dev to work on them</p>
+       <div ng-repeat="card in backlog" ng-include="'partials/card-detail.html'"></div>
+	</div>
 
-    	<div class="col-md-2">
-		   <h2>dev in progress 
-        <img src="/img/stickman.gif" />
-        <img src="/img/stickman.gif" />
-        <img src="/img/stickman.gif" />
-       </h2>
-           <div ng-repeat="card in devInProgress" ng-include="'partials/card-detail.html'">
-           </div>
-    	</div>
+	<div class="col-md-2">
+   <h2>dev in progress 
+    <img src="/img/stickman.gif" />
+    <img src="/img/stickman.gif" />
+    <img src="/img/stickman.gif" />
+   </h2>
+   <p class="explanation"></p>
+       <div ng-repeat="card in devInProgress" ng-include="'partials/card-detail.html'">
+       </div>
+	</div>
 
-    	<div class="col-md-2">
-			<h2>dev done
-              <a ng-show="devDone.isReady()" class="btn btn-primary btn-xs" ng-click="devDone.pull()">push to test</a>
-            </h2>
+	<div class="col-md-2">
+	<h2>dev done
+          <a ng-show="devDone.isReady()" class="btn btn-primary btn-xs" ng-click="devDone.pull()">push to test</a>
+        </h2>
+          <p class="explanation"><em>dev done</em> is a single branch, a push moves all tickets here into test</p>
+       <div ng-repeat="card in devDone" ng-include="'partials/card-detail.html'">
+       </div>
 
-           <div ng-repeat="card in devDone" ng-include="'partials/card-detail.html'">
-           </div>
+	</div>
 
-    	</div>
+	<div class="col-md-2 test-in-progress">
+	<h2>test in progress <img src="/img/stickman.gif" /></h2>
+  <p class="explanation"></p>
+       <div ng-repeat="card in testInProgress" ng-include="'partials/card-detail.html'">
+       </div>            
+       <br/>
+       <div ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}
+        <a ng-show="testInProgress.canUseExcessCapacity()" class="btn btn-primary btn-xs" ng-click="testInProgress.useExcessCapacity()">pull from dev done</a>
 
-    	<div class="col-md-2">
-			<h2>test in progress <img src="/img/stickman.gif" /></h2>
-           <div ng-repeat="card in testInProgress" ng-include="'partials/card-detail.html'">
-           </div>            
-           <br/>
-           <div ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}
-            <a ng-show="testInProgress.canUseExcessCapacity()" class="btn btn-primary btn-xs" ng-click="testInProgress.useExcessCapacity()">pull from dev done</a>
+       </div>
+	</div>
 
-           </div>
-    	</div>
+	<div class="col-md-2 test-done">
+	<h2>test done
+          <a ng-show="testDone.isReady()" class="btn btn-primary btn-xs" ng-click="testDone.pull()">push to live</a>
+                  </h2>
+  <p class="explanation"><em>test in progress</em> and <em>test done</em> count as a single branch, all tickets must have their testing completed before the branch can be pushed to live</p>
+       <div ng-repeat="card in testDone" ng-include="'partials/card-detail.html'">
+       </div>    
+	</div>
 
-    	<div class="col-md-2">
-			<h2>test done
-              <a ng-show="testDone.isReady()" class="btn btn-primary btn-xs" ng-click="testDone.pull()">push to live</a>
-                      </h2>
-           <div ng-repeat="card in testDone" ng-include="'partials/card-detail.html'">
-           </div>    
-    	</div>
+	<div class="col-md-2">
+	<h2>live</h2>
+  <p class="explanation">Tickets released to live generate their value every day</p>
+       <div ng-repeat="card in live" ng-include="'partials/card-detail.html'">
+	</div>
 
-    	<div class="col-md-2">
-			<h2>live</h2>
-
-           <div ng-repeat="card in live" ng-include="'partials/card-detail.html'">
-    	</div>
-    </div>
+</div>

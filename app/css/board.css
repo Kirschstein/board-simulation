@@ -11,3 +11,26 @@
 .bug {
 	background-color: pink;	
 }
+
+.the-board {
+	margin-left:1em;
+}
+
+.explanation {
+	font-size:80%;
+	height:30px;
+}
+
+.test-in-progress {
+	border-left: dotted 2px #ccc;
+	border-top: dotted 2px #ccc;
+	border-bottom: dotted 2px #ccc;
+	min-height:800px;
+}
+
+.test-done {
+	border-right: dotted 2px #ccc;
+	border-top: dotted 2px #ccc;
+	border-bottom: dotted 2px #ccc;
+	min-height:800px;
+}
