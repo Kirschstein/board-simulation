@@ -34,6 +34,9 @@ function Ticket(value, devCost, qaCost, board) {
             board.backlog.splice(index, 1);
           }
         },
+        push : function() { 
+          this.pull();
+        },
         devWork : function(amount) {
           this.devCost -= amount;
           if (this.devCost < 0) {
