@@ -28,9 +28,9 @@ describe('a board with one ticket in test about ready to be completed', function
     	var devCost = 2;
     	var qaCost = 1;
     	scope.board.addStory(value, devCost, qaCost);
-    	scope.backlog[0].pull();
+    	scope.backlog[0].push();
     	scope.newDay();
-    	scope.devInProgress[0].pull();
+    	scope.devInProgress[0].push();
     	scope.devDone.pull();
 
     }, 'Get one ticket into test ready to be worked on by a QA');
