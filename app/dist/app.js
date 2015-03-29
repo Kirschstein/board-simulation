@@ -81,17 +81,18 @@ function Analysts(board, random) {
     	for(var i=0; i < storiesToCreate; ++i) {
            var value = random.nextRandom(7,1);
            var howManyDice = Math.ceil(value / 2);
-           var devCost = random.nextRandom(7 * howManyDice, 1 * howManyDice);
+           var devCost = value + 3;
            var qaCost = value + 1;
            board.addStory(value, devCost, qaCost);
 		};
 	};
 
 	function seedBoard() {
-      board.addStory(2,3,3);
-      board.addStory(3,5,4);
-      board.addStory(6,18,7);
-      board.addStory(4,12,5);
+		createNewUserStories(4);
+   //   board.addStory(2,3,3);
+   //   board.addStory(3,5,4);
+   //   board.addStory(6,18,7);
+   //   board.addStory(4,12,5);
 	};
 
 	return {
@@ -335,7 +336,7 @@ boardServices.service('Random', function() {
 boardServices.service('BugFactory', function(Random) {
 
 	this.processTicket = function(ticket, board) {
-		var nextRandom = Random.nextRandom(1,4);
+		var nextRandom = Random.nextRandom(1,3);
 		if (nextRandom === 1) {
 			board.addBug(ticket);
 		}

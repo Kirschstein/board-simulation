@@ -61,7 +61,7 @@ describe('board controllers', function() {
 
 			scope.newDay();
 
-			expect(scope.devInProgress[0].devCost).toBe(1);
+			expect(scope.devInProgress[0].devCost).toBe(3);
 		});
 	});
 
@@ -69,6 +69,7 @@ describe('board controllers', function() {
 
 		beforeEach(function() {
 			scope.backlog[0].push();
+			scope.newDay();
 			scope.newDay();
 			scope.newDay();
 		}, 'We push one ticket into dev in progress and it is completed');
