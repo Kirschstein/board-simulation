@@ -113,7 +113,7 @@ function Board() {
 
 	result.addBug = function(ticket) {
 		ticket.hasBug = function() { return true;}
-		result.backlog.push(new Bug(0, 1, 1, result, ticket));
+		result.backlog.unshift(new Bug(0, 1, 1, result, ticket));
 	};
 
 	return result;

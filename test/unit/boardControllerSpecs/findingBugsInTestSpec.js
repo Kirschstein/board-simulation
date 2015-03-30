@@ -40,7 +40,7 @@ describe('a board with one ticket in test about ready to be completed', function
     randomResult = 1;
 		scope.newDay();
     expect(scope.backlog.length).toBe(5);
-    expect(scope.backlog[4].type).toBe('bug');
+    expect(scope.backlog[0].type).toBe('bug');
 	});
 
 	it('it does not create create a bug if we "roll" more than 1 after finishing testing', function() {
