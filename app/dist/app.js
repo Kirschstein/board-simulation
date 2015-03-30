@@ -57,23 +57,7 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
   }]);;'use strict';
 
 /* Directives */
-;'use strict';
-
-var boardControllers = angular.module('boardControllers');
-
-boardControllers.value('Backlog', function() {});
-
-var live = [];
-
-live.cumulativeValue = 0;
-
-live.newDay = function() {
-	for (var i=0; i < live.length; ++i) {
-		live.cumulativeValue += live[i].value;
-	};
-};
-
-boardControllers.value('LiveColumn', live);;'use strict'
+;'use strict'
 
 function Analysts(board, random) {
 
@@ -241,6 +225,8 @@ function LiveMetrics(board) {
 
 	return {
 		cumulativeValue : 0,
+		storiesReleased : 0,
+		bugsReleased : 0,
 		newDay : function() {
 			for (var i=0; i < board.live.length; ++i) {
 				this.cumulativeValue += board.live[i].value;
