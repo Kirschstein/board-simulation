@@ -1,7 +1,8 @@
  
 <div class="row" style="margin-top:5em;margin-left:2em;">
         Day {{dayCount}}<br/>
-        Stories released {{live.length}}<br/>
+        Stories released {{liveMetrics.storiesReleased}}<br/>
+        Bugs released {{liveMetrics.bugsReleased}}<br/>
         Cumulative Value {{liveMetrics.cumulativeValue}}<br/>
         <a class="btn btn-primary" ng-click="newDay()">New Day</a>
 </div>
