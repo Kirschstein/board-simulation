@@ -1,10 +1,15 @@
  
 <div class="row" style="margin-top:5em;margin-left:2em;">
-        Day {{dayCount}}<br/>
-        Stories released {{liveMetrics.storiesReleased}}<br/>
-        Bugs released {{liveMetrics.bugsReleased}}<br/>
-        Cumulative Value {{liveMetrics.cumulativeValue}}<br/>
-        <a class="btn btn-primary" ng-click="newDay()">New Day</a>
+
+  <ul style="list-style:none;">
+    <li>Day {{dayCount}}</li>
+    <li>Stories released {{liveMetrics.storiesReleased}}</li>
+    <li>Total Story Value {{liveMetrics.storyValueReleased}}</li>
+    <li>Story Cumulative Value {{liveMetrics.cumulativeValue}}</li>
+    <li>Bugs released {{liveMetrics.bugsReleased}}</li>
+  </ul>
+  <p><a class="btn btn-primary" ng-click="newDay()">New Day</a></p>
+        
 </div>
 
 <div class="row the-board">
