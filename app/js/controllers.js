@@ -23,7 +23,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
         analysts,
         developers,
         testers,
-        $scope.liveMetrics
+        $scope.liveMetrics,
+        board
       ];    
   
       $scope.newDay = function() {

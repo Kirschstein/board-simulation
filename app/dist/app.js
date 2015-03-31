@@ -43,7 +43,8 @@ boardControllers.controller('BoardCtrl', ['$scope', 'Random', 'BugFactory',
         analysts,
         developers,
         testers,
-        $scope.liveMetrics
+        $scope.liveMetrics,
+        board
       ];    
   
       $scope.newDay = function() {
@@ -90,12 +91,12 @@ function Analysts(board, random) {
 function Board() {
 	var ticketsCreated = 0;
 	var result = {
-		backlog : [],
-     	devInProgress : [],
-      	devDone : [],
-      	testInProgress : [],
-        testDone : [],
-      	live : [] ,
+	    backlog : [],
+   	  devInProgress : [],
+    	devDone : [],
+    	testInProgress : [],
+      testDone : [],
+    	live : [] ,
 	};
 
 	result.addStory = function(v, dev, qa) {
@@ -104,11 +105,11 @@ function Board() {
       	value : v,
       	devCost : dev,
       	qaCost : qa,
-  		board : result,
-  		id : ticketsCreated
+  		  board : result,
+  		  id : ticketsCreated
       };
       var story = new Story(options);
-	  result.backlog.push(story);
+	    result.backlog.push(story);
 	};
 
 	result.addBug = function(ticket) {
@@ -116,7 +117,22 @@ function Board() {
 		result.backlog.unshift(new Bug(0, 1, 1, result, ticket));
 	};
 
-	return result;
+  var canPullFromDev = false;
+
+  result.newDay = function() {
+    if (result.devInProgress[0]) {
+      if (result.devInProgress[0].devCompletedYesterday) {
+        canPullFromDev = true;
+      }
+      result.devInProgress[0].devCompletedYesterday = result.devInProgress[0].devCost == 0;
+    }
+  };
+
+  result.canPullFromDevInProgress = function () {
+    return canPullFromDev;
+  };
+
+ 	return result;
 };'use strict';
 
 function Story(options) {
