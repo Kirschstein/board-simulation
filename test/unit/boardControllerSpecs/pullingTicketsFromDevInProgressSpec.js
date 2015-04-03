@@ -24,17 +24,40 @@ describe('pulling work from devInProgress completed before the current day', fun
 
 			scope.newDay();
 			expect(scope.devInProgress[0].devCost).toBe(0); // ensure ticket was finished
-			expect(scope.board.canPullFromDevInProgress()).toBe(false);
+			expect(scope.board.canPullFromDevInProgress(0)).toBe(false);
     	});
 
-    	it('a dev ticket finished on a previous day can be pulled', function() {
+    	it('the first ticket in dev in progress is complete and can be pulled', function() {
+    		scope.backlog[0].push();
+    		scope.backlog[0].push();
     		scope.backlog[0].push();
     		scope.devInProgress[0].devCost = 2;
+    		scope.devInProgress[1].devCost = 2;
+    		scope.devInProgress[2].devCost = 2;
 
 			scope.newDay(); // ticket completes this day
 			scope.newDay();
 
-			expect(scope.board.canPullFromDevInProgress()).toBe(true);
+			expect(scope.board.canPullFromDevInProgress(0)).toBe(true);
+    	});
+
+
+    	it('a dev ticket finished on a previous day can be pulled', function() {
+    		var tooMuchWork = 3;
+    		var justEnoughWork = 2;
+    		scope.backlog[0].push();
+    		scope.backlog[0].push();
+    		scope.backlog[0].push();
+    		scope.devInProgress[0].devCost = tooMuchWork;
+    		scope.devInProgress[1].devCost = justEnoughWork;
+    		scope.devInProgress[2].devCost = tooMuchWork;
+
+			scope.newDay(); // ticket completes this day
+			scope.newDay();
+
+			expect(scope.board.canPullFromDevInProgress(0)).toBe(false);
+			expect(scope.board.canPullFromDevInProgress(1)).toBe(true);
+			expect(scope.board.canPullFromDevInProgress(2)).toBe(false);
     	});
     });
 

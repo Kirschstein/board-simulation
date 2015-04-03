@@ -29,19 +29,19 @@ function Board() {
 		result.backlog.unshift(new Bug(0, 1, 1, result, ticket));
 	};
 
-  var canPullFromDev = false;
-
   result.newDay = function() {
-    if (result.devInProgress[0]) {
-      if (result.devInProgress[0].devCompletedYesterday) {
-        canPullFromDev = true;
-      }
-      result.devInProgress[0].devCompletedYesterday = result.devInProgress[0].devCost == 0;
+    for (var i = 0; i < 3; i++) {
+      if (result.devInProgress[i]) {
+        if (result.devInProgress[i].devCompletedYesterday) {
+          result.devInProgress[i].canPullFromDev = true;
+        }
+        result.devInProgress[i].devCompletedYesterday = result.devInProgress[i].devCost == 0;
+      }      
     }
   };
 
-  result.canPullFromDevInProgress = function () {
-    return canPullFromDev;
+  result.canPullFromDevInProgress = function (index) {
+    return result.devInProgress[index].canPullFromDev || false;
   };
 
  	return result;
