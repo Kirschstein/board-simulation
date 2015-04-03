@@ -1,7 +1,8 @@
 'use strict';
 
 function Developers(board, random) {
-  board.devDone.pull = function() {
+
+  board.devDone.pushToTest = function() {
     board.testInProgress.push.apply(board.testInProgress, board.devDone );
     board.devDone.length = 0;
     board.devDone.isReady = function() { return false;};

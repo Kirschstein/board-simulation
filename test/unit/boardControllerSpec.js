@@ -116,38 +116,38 @@ describe('board controllers', function() {
 		}, 'Complete two tickets and push them into devDone');
 
 		it('pulling dev done into test moves all of the tickets', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 
 			expect(scope.devDone.length).toBe(0);
 			expect(scope.testInProgress.length).toBe(2);
 		});
 
 		it('pulling tickets from devDone hides the pull button', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			expect(scope.devDone.isReady()).toBe(false);
 		});
 
 		it('pulled tickets do not have a bug on by default', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			expect(scope.testInProgress[0].hasBug()).toBe(false);
 		});
 
 		it('a ticket worked on in test has its qaCost reduced', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.newDay();
 
 			expect(scope.testInProgress[0].qaCost).toBe(2);
 		});
 
 		it('tickets in test are only worked on if there is spare QA capacity', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.newDay();
 
 			expect(scope.testInProgress[1].qaCost).toBe(5);
 		});
 
 		it('completed qa cards are immediately placed into test done', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.newDay();
 			scope.newDay();
 
@@ -156,7 +156,7 @@ describe('board controllers', function() {
 		});
 
 		it('extra qa capacity is immediately spent on the next card', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			workDone = 6;
 			scope.newDay();
 
@@ -164,7 +164,7 @@ describe('board controllers', function() {
 		});
 
 		it('shows excess capacity not used in test', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 
 			scope.newDay();
 			scope.newDay();
@@ -179,7 +179,7 @@ describe('board controllers', function() {
 		});
 
 		it('allows excess qa capacity to be used on tickets in devDone', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.devInProgress[0].push();
 			
 			scope.newDay();
@@ -194,7 +194,7 @@ describe('board controllers', function() {
 		});
 
 		it('using excess capacity pulls tickets into dev done and reduces their qaCost remaining', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.devInProgress[0].push();
 			
 			scope.newDay();
@@ -213,7 +213,7 @@ describe('board controllers', function() {
 		});
 
 		it('excess qa capacity is lost when a ticket from dev in progress is pulled', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 			scope.devInProgress[0].push();
 			scope.board.addStory(2,3,2);
 			scope.backlog[1].push();
@@ -232,7 +232,7 @@ describe('board controllers', function() {
 		});
 
 		it('test can be pushed to live when all testing is done on the cards', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 
 			scope.newDay();
 			scope.newDay();
@@ -245,7 +245,7 @@ describe('board controllers', function() {
 		});
 
 		it('pushing test to live empties test and puts cards in live', function(){
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 
 			scope.newDay();
 			scope.newDay();
@@ -260,7 +260,7 @@ describe('board controllers', function() {
 		});
 
 		it('cannot push to live if a bug has been found in one of the tickets', function() {
-			scope.devDone.pull();
+			scope.devDone.pushToTest();
 
 			scope.newDay();
 			scope.newDay();
