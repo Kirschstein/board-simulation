@@ -18,14 +18,20 @@ describe('pulling work from devInProgress completed before the current day', fun
 
     describe('has an item of work already completed in dev', function() {
 
-    	it('allows devDone to pull it', function() {
+    	it('a dev ticket finished that day cannot be pulled', function() {
     		scope.backlog[0].push();
     		scope.devInProgress[0].devCost = 2;
 
 			scope.newDay();
-			expect(scope.devInProgress[0].devCost).toBe(0);
+			expect(scope.devInProgress[0].devCost).toBe(0); // ensure ticket was finished
 			expect(scope.board.canPullFromDevInProgress()).toBe(false);
+    	});
 
+    	it('a dev ticket finished on a previous day can be pulled', function() {
+    		scope.backlog[0].push();
+    		scope.devInProgress[0].devCost = 2;
+
+			scope.newDay(); // ticket completes this day
 			scope.newDay();
 
 			expect(scope.board.canPullFromDevInProgress()).toBe(true);
