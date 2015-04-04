@@ -29,7 +29,7 @@ function Testers(board, random, bugFactory) {
   };
 
   board.testInProgress.useExcessCapacity = function() {
-    board.devDone.pull();
+    board.devDone.pushToTest();
     var excess = board.testInProgress.excessCapacity;
     board.testInProgress.excessCapacity = 0;
     doTestWork(excess);
