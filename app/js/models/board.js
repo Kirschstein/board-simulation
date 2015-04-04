@@ -41,7 +41,17 @@ function Board() {
   };
 
   result.canPullFromDevInProgress = function (index) {
-    return result.devInProgress[index].canPullFromDev || false;
+    if (result.devInProgress[index]){
+      return result.devInProgress[index].canPullFromDev || false;
+    }
+    return false;
+  };
+
+  result.devDone.pull = function(index) {
+    var ticket = result.devInProgress[index];
+    ticket.isReady = function () { return false;};
+    result.devInProgress.splice(index, 1);
+    result.devDone.push(ticket);
   };
 
  	return result;

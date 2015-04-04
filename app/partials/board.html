@@ -38,6 +38,19 @@
        <div ng-repeat="card in devDone" ng-include="'partials/card-detail.html'">
        </div>
 
+      <div class="col-md-6">
+       <p ng-show="board.canPullFromDevInProgress(0)">
+        <a class="btn btn-primary btn-xs" ng-click="devDone.pull(0)">pull a</a> </p>
+
+
+       <p ng-show="board.canPullFromDevInProgress(1)">
+        <a class="btn btn-primary btn-xs" ng-click="devDone.pull(1)">pull b</a> </p>
+        
+
+       <p ng-show="board.canPullFromDevInProgress(2)">
+        <a class="btn btn-primary btn-xs" ng-click="devDone.pull(2)">pull c</a> </p>
+      </div>  
+
 	</div>
 
 	<div class="col-md-2 test-in-progress">
