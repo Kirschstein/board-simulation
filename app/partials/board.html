@@ -46,8 +46,7 @@
        <div ng-repeat="card in testInProgress" ng-include="'partials/card-detail.html'">
        </div>            
        <br/>
-       <div ng-show="testInProgress.showExcessCapacity()">Excess Capacity : {{testInProgress.excessCapacity}}
-        <a ng-show="testInProgress.canUseExcessCapacity()" class="btn btn-primary btn-xs" ng-click="testInProgress.useExcessCapacity()">pull from dev done</a>
+       <div ng-show="testInProgress.showExcessCapacity()">Excess QA Capacity<a ng-show="testInProgress.canUseExcessCapacity()" class="btn btn-primary btn-xs" ng-click="testInProgress.useExcessCapacity()">pull from dev done &amp; use</a>
 
        </div>
 	</div>
