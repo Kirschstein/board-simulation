@@ -94,6 +94,34 @@ describe('pulling work from devInProgress completed before the current day', fun
       expect(scope.devDone[0].isReady()).toBe(false);
     });
 
+    it('pushing a ticket to dev done means that other tickets can no longer be pulled that day', function() {
+        scope.backlog[0].push();
+        scope.devInProgress[0].devCost = 2;
+
+        scope.newDay(); // ticket A now complete
+        scope.backlog[0].push();
+        scope.devInProgress[1].devCost = 2;
+
+        scope.newDay(); // ticket B complete, ticket A can be pulled        
+
+        scope.devInProgress[1].push();
+        expect(scope.board.canPullFromDevInProgress(0)).toBe(false);
+    });
+
+    it('after a new day tickets can be pulled again', function() {
+        scope.backlog[0].push();
+        scope.devInProgress[0].devCost = 2;
+
+        scope.newDay(); // ticket A now complete
+        scope.backlog[0].push();
+        scope.devInProgress[1].devCost = 2;
+
+        scope.newDay(); // ticket B complete, ticket A can be pulled        
+
+        scope.devInProgress[1].push();
+        scope.newDay();
+        expect(scope.board.canPullFromDevInProgress(0)).toBe(true);
+    });
 
 
   });

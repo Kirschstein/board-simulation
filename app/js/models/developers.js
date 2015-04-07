@@ -27,6 +27,7 @@ function Developers(board, random) {
             board.devDone.add(this);
             board.devInProgress.splice(index, 1);
             board.testInProgress.excessCapacity = 0;
+            board.ticketPushed();
           }
       };
   };

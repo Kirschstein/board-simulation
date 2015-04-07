@@ -118,6 +118,7 @@ function Board() {
 	};
 
   result.newDay = function() {
+    ticketHasBeenPushedToday = false;
     for (var i = 0; i < 3; i++) {
       if (result.devInProgress[i]) {
         if (result.devInProgress[i].devCompletedYesterday) {
@@ -128,7 +129,13 @@ function Board() {
     }
   };
 
+  var ticketHasBeenPushedToday = false;
+
   result.canPullFromDevInProgress = function (index) {
+    if (ticketHasBeenPushedToday) {
+      return false;
+    }
+
     if (result.devInProgress[index]){
       return result.devInProgress[index].canPullFromDev || false;
     }
@@ -140,6 +147,10 @@ function Board() {
     ticket.isReady = function () { return false;};
     result.devInProgress.splice(index, 1);
     result.devDone.push(ticket);
+  };
+
+  result.ticketPushed = function() {
+    ticketHasBeenPushedToday = true;
   };
 
  	return result;
@@ -228,6 +239,7 @@ function Developers(board, random) {
             board.devDone.add(this);
             board.devInProgress.splice(index, 1);
             board.testInProgress.excessCapacity = 0;
+            board.ticketPushed();
           }
       };
   };
