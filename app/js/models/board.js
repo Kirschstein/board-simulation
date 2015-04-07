@@ -26,7 +26,9 @@ function Board() {
 
 	result.addBug = function(ticket) {
 		ticket.hasBug = function() { return true;}
-		result.backlog.unshift(new Bug(0, 1, 1, result, ticket));
+    var halfQaCost = ((ticket.value + 1) / 2) | 0;
+    var halfDevCost = ticket.value + 1;
+		result.backlog.unshift(new Bug(0, halfDevCost, halfQaCost, result, ticket));
 	};
 
   result.newDay = function() {
