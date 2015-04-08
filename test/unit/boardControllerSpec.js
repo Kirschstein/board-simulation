@@ -61,7 +61,7 @@ describe('board controllers', function() {
 
 			scope.newDay();
 
-			expect(scope.devInProgress[0].devCost).toBe(3);
+			expect(scope.devInProgress[0].devCost).toBe(4);
 		});
 	});
 
