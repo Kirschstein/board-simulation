@@ -10,6 +10,9 @@ describe('board controllers', function() {
       random = {
       	nextRandom : function(high,low) {
       		return workDone;
+      	},
+      	nextBugRandom : function(high,low) {
+      		return workDone;
       	}
       };
 
@@ -241,6 +244,8 @@ describe('board controllers', function() {
 			scope.newDay();
 
 			expect(scope.testInProgress.length).toBe(0);
+			scope.testDone[0].hasBug = function() { return false;}
+			scope.testDone[1].hasBug  = function() { return false;}
 			expect(scope.testDone.isReady()).toBe(true);
 		});
 

@@ -9,6 +9,9 @@ describe('pulling work from devInProgress completed before the current day', fun
         random = {
           nextRandom : function(high,low) {
             return workDone;
+          },
+          nextBugRandom : function(high,low) {
+            return workDone;
           }
         };
 

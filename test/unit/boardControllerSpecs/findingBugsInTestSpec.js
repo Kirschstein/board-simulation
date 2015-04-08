@@ -3,16 +3,19 @@
 describe('a board with one ticket in test about ready to be completed', function() {
 	beforeEach(module('boardSimulationApp'));
 
-	var scope, ctrl, randomResult;
+	var scope, ctrl, genericRandomResult, bugRandomResult;
 
     beforeEach(function() {
       module( function ($provide) {
-
-      var random = {
-        nextRandom : function(high,low) {
-          return randomResult;
-        }
-      };
+        bugRandomResult = 1;
+        var random = {
+          nextRandom : function(high,low) {
+            return genericRandomResult;
+          },
+          nextBugRandom : function(high,low) {
+            return bugRandomResult;
+          }
+        };
         $provide.value('Random', random);
       });
     });
@@ -37,14 +40,16 @@ describe('a board with one ticket in test about ready to be completed', function
 
 
 	it('it creates a bug if we "roll a 1" after fininshing testing', function() {
-    randomResult = 1;
+    genericRandomResult = 2;
+    bugRandomResult = 1;
 		scope.newDay();
     expect(scope.backlog.length).toBe(5);
     expect(scope.backlog[0].type).toBe('bug');
 	});
 
 	it('it does not create create a bug if we "roll" more than 1 after finishing testing', function() {
-    randomResult = 2;
+    genericRandomResult = 1;
+    bugRandomResult = 2;
     scope.newDay();
     expect(scope.backlog.length).toBe(4);
     expect(scope.backlog[3].type).toBe('story');

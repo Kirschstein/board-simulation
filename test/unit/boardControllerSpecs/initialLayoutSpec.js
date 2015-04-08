@@ -10,6 +10,9 @@ describe('board controllers', function() {
       random = {
       	nextRandom : function(high,low) {
       		return workDone;
+      	},
+      	nextBugRandom : function(high,low) {
+      		return workDone;
       	}
       };
 
